@@ -1,4 +1,17 @@
 .Sidebar {
   width: 400px;
   background-color: #121212;
+  padding: 20px;
+}
+
+.button {
+  background-color: var(--main-blue);
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: #83a089;
 }

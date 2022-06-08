@@ -6,6 +6,7 @@ import { useState } from "react";
 
 function App() {
   const [frequencyType, setFrequencyType] = useState("max_freq");
+  const [weights, setWeights] = useState([0.5, 0.5]);
 
   function changeFrequency() {
     setFrequencyType((prev) =>
@@ -13,9 +14,18 @@ function App() {
     );
   }
 
+  function calculateWeights(w1, w2) {
+    const total = w1 + w2;
+    setWeights([(w1 / total).toFixed(1), (w2 / total).toFixed(1)]);
+  }
+
   return (
     <div className="App">
-      <Sidebar changeFrequency={changeFrequency} variable={frequencyType} />
+      <Sidebar
+        changeFrequency={changeFrequency}
+        variable={frequencyType}
+        calculateWeights={calculateWeights}
+      />
       <Map data={data} variable={frequencyType} />
     </div>
   );

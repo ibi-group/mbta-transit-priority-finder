@@ -4,6 +4,7 @@ import {
   Polyline,
   GeoJSON,
   useMapEvents,
+  Popup,
 } from "react-leaflet";
 import classes from "./Map.module.css";
 import "leaflet/dist/leaflet.css";
@@ -35,14 +36,14 @@ const Map = (props) => {
   const colorScale = scale(colors).domain(breaks);
 
   const computePolylines = (featureSet) => {
-    const lines = featureSet.map((feat) => {
+    const lines = featureSet.map(({ geometry, properties }) => {
       //reverse coords for polyline
-      const coordList = feat.geometry.coordinates.map((pair) => {
+      const coordList = geometry.coordinates.map((pair) => {
         return [pair[1], pair[0]];
       });
 
-      const IB = feat.properties.dir_id === "Inbound";
-      const freq = feat.properties[variable];
+      const IB = properties.dir_id === "Inbound";
+      const freq = properties[variable];
 
       const options = {
         color: IB ? colorScale(freq) : colorScale(freq),
@@ -55,7 +56,15 @@ const Map = (props) => {
           key={Math.random()}
           positions={coordList}
           pathOptions={options}
-        />
+        >
+          <Popup>
+            Direction: {properties.dir_id}
+            <br />
+            Routes: {properties.route_name}
+            <br />
+            Frequency: {properties[variable]}
+          </Popup>
+        </Polyline>
       );
     });
     return lines;
