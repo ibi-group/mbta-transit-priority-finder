@@ -46,6 +46,7 @@ const Map = (props) => {
       const freq = properties[variable];
 
       const options = {
+        weight: 3,
         color: IB ? colorScale(freq) : colorScale(freq),
         offset: IB ? 5 : 0,
         dashArray: IB ? "10, 5" : "",
@@ -53,16 +54,23 @@ const Map = (props) => {
 
       return (
         <Polyline
+          className={classes.busline}
           key={Math.random()}
           positions={coordList}
           pathOptions={options}
+          eventHandlers={{
+            mouseover: (e) => e.target.setStyle({ weight: 8 }),
+            mouseout: (e) => e.target.setStyle({ weight: 3 }),
+          }}
         >
           <Popup>
-            Direction: {properties.dir_id}
+            <strong>Direction:</strong> {properties.dir_id}
             <br />
-            Routes: {properties.route_name}
+            <strong>Routes:</strong> {properties.route_name}
             <br />
-            Frequency: {properties[variable]}
+            <strong>Frequency:</strong> {properties.frequency}
+            <br />
+            <strong>Max Frequency:</strong> {properties.max_freq}
           </Popup>
         </Polyline>
       );
