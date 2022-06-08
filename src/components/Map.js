@@ -25,7 +25,7 @@ const Map = (props) => {
   const [zoomLevel, setZoomLevel] = useState(13);
   const mapCenter = [42.3601, -71.0589];
 
-  const variable = "frequency";
+  const variable = props.variable;
 
   const values = props.data.features.map((f) => f.properties[variable]);
 
