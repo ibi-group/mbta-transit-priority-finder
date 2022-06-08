@@ -8,8 +8,9 @@ import {
 import classes from "./Map.module.css";
 import "leaflet/dist/leaflet.css";
 import "leaflet-polylineoffset";
-import { scale } from "chroma-js";
+import { scale, limits } from "chroma-js";
 import { useState, useMemo } from "react";
+import Legend from "./Legend";
 
 const SetDataonZoom = (props) => {
   const map = useMapEvents({
@@ -24,7 +25,14 @@ const Map = (props) => {
   const [zoomLevel, setZoomLevel] = useState(13);
   const mapCenter = [42.3601, -71.0589];
 
-  const colorScale = scale(["#C9F7F5", "#0B4744"]).domain([1, 500]).gamma(0.5);
+  const variable = "frequency";
+
+  const values = props.data.features.map((f) => f.properties[variable]);
+
+  //Create color scale
+  const colors = scale(["#FFB35C", "#1F91AD"]).colors(10);
+  const breaks = limits(values, "q", 10);
+  const colorScale = scale(colors).domain(breaks);
 
   const computePolylines = (featureSet) => {
     const lines = featureSet.map((feat) => {
@@ -34,11 +42,11 @@ const Map = (props) => {
       });
 
       const IB = feat.properties.dir_id === "Inbound";
-      const freq = feat.properties.frequency;
+      const freq = feat.properties[variable];
 
       const options = {
         color: IB ? colorScale(freq) : colorScale(freq),
-        offset: IB ? 10 : 0,
+        offset: IB ? 5 : 0,
         dashArray: IB ? "10, 5" : "",
       };
 
@@ -60,7 +68,7 @@ const Map = (props) => {
 
   function styleLines(feature) {
     return {
-      color: colorScale(feature.properties.frequency),
+      color: colorScale(feature.properties[variable]),
     };
   }
 
@@ -71,13 +79,14 @@ const Map = (props) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiaWJpLXRyYW5zaXQtZGF0YS10ZWFtIiwiYSI6ImNrcDI4aHFzMzFpMmcydnF3OHd5N3Z0OW8ifQ.IwReYu0rGZko64sy2mbPSg"
         />
-        {zoomLevel >= 16 ? (
+        {zoomLevel >= 14 ? (
           lines
         ) : (
           <GeoJSON style={styleLines} data={props.data.features} />
         )}
         <SetDataonZoom setZoom={setZoomLevel} />
       </MapContainer>
+      <Legend colors={colors} breaks={breaks} />
     </div>
   );
 };
