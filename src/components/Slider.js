@@ -8,6 +8,9 @@ const SliderInput = (props) => {
           active: {
             backgroundColor: "#1F91AD",
           },
+          track: {
+            backgroundColor: "rgba(255,255,255, .2)",
+          },
         }}
         axis="x"
         x={props.state.x}

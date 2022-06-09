@@ -1,9 +1,16 @@
-import { VerticalRectSeries, XYPlot, XAxis, YAxis } from "react-vis/dist";
+import { VerticalRectSeries, XYPlot, XAxis } from "react-vis/dist";
 import SliderInput from "./Slider";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const Chart = ({ data }) => {
+const Chart = ({ data, type }) => {
+  const [sliderRange, setSliderRange] = useState([]);
   const [binWidth, setBinWidth] = useState({ x: 5 });
+
+  useEffect(() => {
+    const range = type === "max_freq" ? [5, 20] : [50, 60];
+    setSliderRange(range);
+    setBinWidth({ x: range[0] });
+  }, [type]);
 
   function histogram(X, binRange) {
     //inclusive of the first number
@@ -22,7 +29,7 @@ const Chart = ({ data }) => {
     X.forEach((x) => bins[Math.floor((x - min) / binRange)]++);
 
     const data = edges.map((edge, index) => {
-      return { x: edge[0], x0: edge[1], y: 0, y0: bins[index] };
+      return { x0: edge[0], x: edge[1], y: bins[index] };
     });
 
     return data;
@@ -32,16 +39,25 @@ const Chart = ({ data }) => {
 
   return (
     <div>
-      <XYPlot height={250} width={400}>
+      <XYPlot height={250} width={300}>
+        <XAxis
+          style={{ stroke: "#FFFFFF", fontSize: "12px" }}
+          tickValues={[
+            ...chartData.map((d) => d.x),
+            chartData[chartData.length - 1].x0,
+          ]}
+        />
         <VerticalRectSeries
           animation
           stroke="#121212"
           data={chartData}
         ></VerticalRectSeries>
-        <XAxis />
-        <YAxis />
       </XYPlot>
-      <SliderInput range={[5, 20]} state={binWidth} setState={setBinWidth} />
+      <SliderInput
+        range={sliderRange}
+        state={binWidth}
+        setState={setBinWidth}
+      />
     </div>
   );
 };
