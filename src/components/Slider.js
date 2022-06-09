@@ -11,8 +11,8 @@ const SliderInput = (props) => {
         }}
         axis="x"
         x={props.state.x}
-        xmin={1}
-        xmax={8}
+        xmin={props.range[0]}
+        xmax={props.range[1]}
         onChange={({ x }) => props.setState((state) => ({ ...state, x }))}
       />
       <p>{props.state.x}</p>

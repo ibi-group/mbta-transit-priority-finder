@@ -8,6 +8,8 @@ function App() {
   const [frequencyType, setFrequencyType] = useState("max_freq");
   const [weights, setWeights] = useState([0.5, 0.5]);
 
+  const chartData = data.features.map((d) => d.properties[frequencyType]);
+
   function changeFrequency() {
     setFrequencyType((prev) =>
       prev === "max_freq" ? "frequency" : "max_freq"
@@ -22,11 +24,12 @@ function App() {
   return (
     <div className="App">
       <Sidebar
+        data={chartData}
         changeFrequency={changeFrequency}
         variable={frequencyType}
         calculateWeights={calculateWeights}
       />
-      <Map data={data} variable={frequencyType} />
+      <Map data={data} values={chartData} variable={frequencyType} />
     </div>
   );
 }

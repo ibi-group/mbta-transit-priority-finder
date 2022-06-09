@@ -12,6 +12,7 @@ import "leaflet-polylineoffset";
 import { scale, limits } from "chroma-js";
 import { useState, useMemo } from "react";
 import Legend from "./Legend";
+import LoadingSpinner from "./LoadingSpinner";
 
 const SetDataonZoom = (props) => {
   const map = useMapEvents({
@@ -22,13 +23,11 @@ const SetDataonZoom = (props) => {
   return null;
 };
 
-const Map = (props) => {
+const Map = ({ variable, values, data }) => {
   const [zoomLevel, setZoomLevel] = useState(13);
+  const [loading, setLoading] = useState(false);
+
   const mapCenter = [42.3601, -71.0589];
-
-  const variable = props.variable;
-
-  const values = props.data.features.map((f) => f.properties[variable]);
 
   //Create color scale
   const colors = scale(["#FFB35C", "#1F91AD"]).colors(10);
@@ -75,13 +74,11 @@ const Map = (props) => {
         </Polyline>
       );
     });
+
     return lines;
   };
 
-  const lines = useMemo(
-    () => computePolylines(props.data.features),
-    [props.data.features]
-  );
+  const lines = useMemo(() => computePolylines(data.features), [data.features]);
 
   function styleLines(feature) {
     return {
@@ -99,11 +96,12 @@ const Map = (props) => {
         {zoomLevel >= 14 ? (
           lines
         ) : (
-          <GeoJSON style={styleLines} data={props.data.features} />
+          <GeoJSON style={styleLines} data={data.features} />
         )}
         <SetDataonZoom setZoom={setZoomLevel} />
       </MapContainer>
       <Legend colors={colors} breaks={breaks} />
+      {loading && <LoadingSpinner />}
     </div>
   );
 };
