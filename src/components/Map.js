@@ -10,7 +10,7 @@ import classes from "./Map.module.css";
 import "leaflet/dist/leaflet.css";
 import "leaflet-polylineoffset";
 import { scale, limits } from "chroma-js";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Legend from "./Legend";
 import LoadingSpinner from "./LoadingSpinner";
 
@@ -26,6 +26,30 @@ const SetDataonZoom = (props) => {
 const Map = ({ variable, values, data }) => {
   const [zoomLevel, setZoomLevel] = useState(13);
   const [loading, setLoading] = useState(false);
+  const [routes, setRoutes] = useState([]);
+
+  const API_KEY = "b2RU44pXMiPzCdedeiTtdwAS6EBBaEMX";
+
+  async function fetchRoutes() {
+    const response = await fetch(
+      "https://transit.land/api/v2/rest/routes?operator_onestop_id=o-drt-mbta&route_type=1&format=geojson",
+      {
+        headers: {
+          apikey: API_KEY,
+        },
+      }
+    );
+    try {
+      const data = await response.json();
+      setRoutes(data.features);
+    } catch {
+      console.log("error fetching routes!");
+    }
+  }
+
+  useEffect(() => {
+    fetchRoutes();
+  }, []);
 
   const mapCenter = [42.3601, -71.0589];
 
@@ -98,6 +122,7 @@ const Map = ({ variable, values, data }) => {
         ) : (
           <GeoJSON style={styleLines} data={data.features} />
         )}
+        {routes && <GeoJSON key={Math.random()} data={routes} />}
         <SetDataonZoom setZoom={setZoomLevel} />
       </MapContainer>
       <Legend colors={colors} breaks={breaks} />
