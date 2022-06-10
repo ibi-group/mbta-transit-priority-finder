@@ -10,9 +10,10 @@ import classes from "./Map.module.css";
 import "leaflet/dist/leaflet.css";
 import "leaflet-polylineoffset";
 import { scale, limits } from "chroma-js";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import Legend from "./Legend";
 import LoadingSpinner from "./LoadingSpinner";
+import useRailRoutes from "./useRailRoutes";
 
 const SetDataonZoom = (props) => {
   const map = useMapEvents({
@@ -26,32 +27,10 @@ const SetDataonZoom = (props) => {
 const Map = ({ variable, values, data }) => {
   const [zoomLevel, setZoomLevel] = useState(13);
   const [loading, setLoading] = useState(false);
-  const [routes, setRoutes] = useState([]);
-
-  const API_KEY = "b2RU44pXMiPzCdedeiTtdwAS6EBBaEMX";
-
-  async function fetchRoutes() {
-    const response = await fetch(
-      "https://transit.land/api/v2/rest/routes?operator_onestop_id=o-drt-mbta&route_type=1&format=geojson",
-      {
-        headers: {
-          apikey: API_KEY,
-        },
-      }
-    );
-    try {
-      const data = await response.json();
-      setRoutes(data.features);
-    } catch {
-      console.log("error fetching routes!");
-    }
-  }
-
-  useEffect(() => {
-    fetchRoutes();
-  }, []);
 
   const mapCenter = [42.3601, -71.0589];
+  const subway = useRailRoutes(1);
+  const rail = useRailRoutes(2);
 
   //Create color scale
   const colors = scale(["#FFB35C", "#1F91AD"]).colors(10);
@@ -110,6 +89,13 @@ const Map = ({ variable, values, data }) => {
     };
   }
 
+  function styleRail(feature) {
+    return {
+      weight: 1,
+      color: "#D6AEC0",
+    };
+  }
+
   return (
     <div className={classes.map}>
       <MapContainer center={mapCenter} zoom={13} minZoom={10} maxZoom={18}>
@@ -122,7 +108,10 @@ const Map = ({ variable, values, data }) => {
         ) : (
           <GeoJSON style={styleLines} data={data.features} />
         )}
-        {routes && <GeoJSON key={Math.random()} data={routes} />}
+        {subway && (
+          <GeoJSON key={Math.random()} style={styleRail} data={subway} />
+        )}
+        {rail && <GeoJSON key={Math.random()} style={styleRail} data={rail} />}
         <SetDataonZoom setZoom={setZoomLevel} />
       </MapContainer>
       <Legend colors={colors} breaks={breaks} />
