@@ -24,3 +24,21 @@
   cursor: pointer;
   background-color: #83a089;
 }
+
+.inputField {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px;
+  color: #fff;
+  -webkit-appearance: none;
+}
+
+.inputField:focus {
+  border: none;
+  transform: scale(1.1);
+  background-color: rgba(255, 255, 255, 0.5);
+  transition: transform 200ms, background-color 500ms;
+  outline: none;
+}

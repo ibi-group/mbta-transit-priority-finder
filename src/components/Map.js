@@ -81,7 +81,7 @@ const Map = ({ variable, values, data }) => {
     return lines;
   };
 
-  const lines = useMemo(() => computePolylines(data.features), [data.features]);
+  const lines = useMemo(() => computePolylines(data), [data]);
 
   function styleLines(feature) {
     return {
@@ -106,7 +106,7 @@ const Map = ({ variable, values, data }) => {
         {zoomLevel >= 14 ? (
           lines
         ) : (
-          <GeoJSON style={styleLines} data={data.features} />
+          <GeoJSON key={Math.random()} style={styleLines} data={data} />
         )}
         {subway && (
           <GeoJSON key={Math.random()} style={styleRail} data={subway} />

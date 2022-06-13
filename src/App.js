@@ -7,8 +7,12 @@ import { useState } from "react";
 function App() {
   const [frequencyType, setFrequencyType] = useState("max_freq");
   const [weights, setWeights] = useState([0.5, 0.5]);
+  const [threshold, setThreshold] = useState(0);
 
   const chartData = data.features.map((d) => d.properties[frequencyType]);
+  const mapData = data.features.filter(
+    (d) => d.properties[frequencyType] >= threshold
+  );
 
   function changeFrequency() {
     setFrequencyType((prev) =>
@@ -16,9 +20,10 @@ function App() {
     );
   }
 
-  function calculateWeights(w1, w2) {
+  function calculateWeights(w1, w2, filter) {
     const total = w1 + w2;
     setWeights([(w1 / total).toFixed(1), (w2 / total).toFixed(1)]);
+    setThreshold(filter);
   }
 
   return (
@@ -29,7 +34,7 @@ function App() {
         variable={frequencyType}
         calculateWeights={calculateWeights}
       />
-      <Map data={data} values={chartData} variable={frequencyType} />
+      <Map data={mapData} values={chartData} variable={frequencyType} />
     </div>
   );
 }
