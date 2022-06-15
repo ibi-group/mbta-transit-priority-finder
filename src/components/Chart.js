@@ -2,15 +2,15 @@ import { VerticalRectSeries, XYPlot, XAxis } from "react-vis/dist";
 import SliderInput from "./Slider";
 import { useState, useEffect } from "react";
 
-const Chart = ({ data, type }) => {
+const Chart = ({ data }) => {
   const [sliderRange, setSliderRange] = useState([]);
   const [binWidth, setBinWidth] = useState({ x: 5 });
 
   useEffect(() => {
-    const range = type === "max_freq" ? [5, 20] : [50, 60];
+    const range = [5, 20];
     setSliderRange(range);
     setBinWidth({ x: range[0] });
-  }, [type]);
+  }, []);
 
   function histogram(X, binRange) {
     //inclusive of the first number

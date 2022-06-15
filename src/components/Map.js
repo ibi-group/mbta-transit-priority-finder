@@ -12,7 +12,6 @@ import "leaflet-polylineoffset";
 import { scale, limits } from "chroma-js";
 import { useState, useMemo } from "react";
 import Legend from "./Legend";
-import LoadingSpinner from "./LoadingSpinner";
 import useRailRoutes from "./useRailRoutes";
 
 const SetDataonZoom = (props) => {
@@ -26,7 +25,6 @@ const SetDataonZoom = (props) => {
 
 const Map = ({ variable, values, data }) => {
   const [zoomLevel, setZoomLevel] = useState(13);
-  const [loading, setLoading] = useState(false);
 
   const mapCenter = [42.3601, -71.0589];
   const subway = useRailRoutes(1);
@@ -115,7 +113,6 @@ const Map = ({ variable, values, data }) => {
         <SetDataonZoom setZoom={setZoomLevel} />
       </MapContainer>
       <Legend colors={colors} breaks={breaks} />
-      {loading && <LoadingSpinner />}
     </div>
   );
 };

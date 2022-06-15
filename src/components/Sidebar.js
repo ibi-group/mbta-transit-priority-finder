@@ -52,7 +52,7 @@ const Sidebar = (props) => {
           {props.variable}
         </button>
       </div>
-      <Chart data={props.data} type={props.variable} />
+      <Chart data={props.data} />
     </div>
   );
 };
