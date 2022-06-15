@@ -6,8 +6,16 @@ import Chart from "./Chart";
 const Sidebar = (props) => {
   const [w1, setW1] = useState({ x: 1 });
   const [w2, setW2] = useState({ x: 1 });
+  const [w3, setW3] = useState({ x: 1 });
+  const [w4, setW4] = useState({ x: 1 });
+
   const sliderRange = [1, 8];
   const inputRef = useRef();
+
+  const submitHandler = () => {
+    const data = { w1: w1.x, w2: w2.x, w3: w3.x, w4: w4.x };
+    props.calculateWeights(data, inputRef.current.value);
+  };
 
   return (
     <div className={classes.Sidebar}>
@@ -18,9 +26,10 @@ const Sidebar = (props) => {
           view both direction of travel
         </p>
       </div>
-
       <SliderInput range={sliderRange} state={w1} setState={setW1} />
       <SliderInput range={sliderRange} state={w2} setState={setW2} />
+      <SliderInput range={sliderRange} state={w3} setState={setW3} />
+      <SliderInput range={sliderRange} state={w4} setState={setW4} />
       <div>
         <p>Show segments with a score of at least</p>
         <input
@@ -32,12 +41,7 @@ const Sidebar = (props) => {
         ></input>
       </div>
       <div className={classes.buttonset}>
-        <button
-          className={classes.button}
-          onClick={() =>
-            props.calculateWeights(w1.x, w2.x, inputRef.current.value)
-          }
-        >
+        <button className={classes.button} onClick={submitHandler}>
           Calculate
         </button>
 

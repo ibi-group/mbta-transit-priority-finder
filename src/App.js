@@ -6,7 +6,6 @@ import { useState } from "react";
 
 function App() {
   const [frequencyType, setFrequencyType] = useState("max_freq");
-  const [weights, setWeights] = useState([0.5, 0.5]);
   const [threshold, setThreshold] = useState(0);
 
   const chartData = data.features.map((d) => d.properties[frequencyType]);
@@ -20,9 +19,23 @@ function App() {
     );
   }
 
-  function calculateWeights(w1, w2, filter) {
-    const total = w1 + w2;
-    setWeights([(w1 / total).toFixed(1), (w2 / total).toFixed(1)]);
+  function calculateWeights(weights, filter) {
+    const newData = data.features.map((d) => {
+      return {
+        type: d.type,
+        properties: {
+          ...d.properties,
+          freq_score: d.properties.freq_score * weights.w1,
+          time_variability: d.properties.time_variability * weights.w2,
+          demographics: d.properties.demographics * weights.w3,
+          other_factors: d.properties.other_factors * weights.w4,
+        },
+        geometry: d.geometry,
+      };
+    });
+
+    console.log("map data", mapData[0]);
+    console.log("transformed data", newData[0]);
     setThreshold(filter);
   }
 
