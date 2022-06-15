@@ -14,7 +14,7 @@ const Sidebar = (props) => {
 
   const submitHandler = () => {
     const data = { w1: w1.x, w2: w2.x, w3: w3.x, w4: w4.x };
-    props.calculateWeights(data, inputRef.current.value);
+    props.adjustFilters(data, inputRef.current.value);
   };
 
   return (
@@ -43,13 +43,6 @@ const Sidebar = (props) => {
       <div className={classes.buttonset}>
         <button className={classes.button} onClick={submitHandler}>
           Calculate
-        </button>
-
-        <button
-          className={classes.button}
-          onClick={() => props.changeFrequency()}
-        >
-          {props.variable}
         </button>
       </div>
       <Chart data={props.data} />

@@ -2,15 +2,30 @@ import "./App.css";
 import Map from "./components/Map";
 import Sidebar from "./components/Sidebar";
 import segmentData from "./Data/mbta_proposed_segments.json";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 function App() {
-  const [data, setData] = useState(segmentData.features);
+  const [weights, setWeights] = useState({ w1: 1, w2: 1, w3: 1, w4: 1 });
+  const [filter, setFilter] = useState(0);
   const variable = "total_score";
-  const chartData = data.map((d) => d.properties.total_score);
 
-  function calculateWeights(weights, filter) {
-    const newData = data
+  function adjustFilters(newWeights, newFilterValue) {
+    if (
+      Object.values(newWeights).every(
+        (w, idx) => w === Object.values(weights)[idx]
+      ) === false
+    ) {
+      setWeights(newWeights);
+    }
+
+    if (newFilterValue !== filter) {
+      setFilter(newFilterValue);
+    }
+  }
+
+  function recalculateScore(weights, filter) {
+    console.log("recalculating!");
+    const newData = segmentData.features
       .map((d) => {
         const score1 = d.properties.freq_score * weights.w1;
         const score2 = d.properties.time_variability * weights.w2;
@@ -32,14 +47,21 @@ function App() {
       })
       .filter((d) => d.properties.total_score >= filter);
 
-    console.log("transformed data", newData[0]);
-    setData(newData);
+    const values = newData.map((d) => d.properties.total_score);
+
+    return [newData, values];
   }
+
+  //this is still re-computing every time even though it's wrapped in useMemo
+  const [mapData, scoreValues] = useMemo(
+    () => recalculateScore(weights, filter),
+    [weights, filter]
+  );
 
   return (
     <div className="App">
-      <Sidebar data={chartData} calculateWeights={calculateWeights} />
-      <Map data={data} values={chartData} variable={variable} />
+      <Sidebar data={scoreValues} adjustFilters={adjustFilters} />
+      <Map data={mapData} values={scoreValues} variable={variable} />
     </div>
   );
 }
