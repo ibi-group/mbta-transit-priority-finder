@@ -3,10 +3,12 @@ import Map from "./components/Map";
 import Sidebar from "./components/Sidebar";
 import segmentData from "./Data/mbta_proposed_segments.json";
 import { useState, useMemo } from "react";
+import LoadingSpinner from "./components/LoadingSpinner";
 
 function App() {
   const [weights, setWeights] = useState({ w1: 1, w2: 1, w3: 1, w4: 1 });
   const [filter, setFilter] = useState(0);
+  const [loading, setLoading] = useState(false);
   const variable = "total_score";
 
   function adjustFilters(newWeights, newFilterValue) {
@@ -24,7 +26,7 @@ function App() {
   }
 
   function recalculateScore(weights, filter) {
-    console.log("recalculating!");
+    setLoading(true);
     const newData = segmentData.features
       .map((d) => {
         const score1 = d.properties.freq_score * weights.w1;
@@ -48,6 +50,7 @@ function App() {
       .filter((d) => d.properties.total_score >= filter);
 
     const values = newData.map((d) => d.properties.total_score);
+    setLoading(false);
 
     return [newData, values];
   }
@@ -60,6 +63,7 @@ function App() {
 
   return (
     <div className="App">
+      {loading && <LoadingSpinner />}
       <Sidebar data={scoreValues} adjustFilters={adjustFilters} />
       <Map data={mapData} values={scoreValues} variable={variable} />
     </div>

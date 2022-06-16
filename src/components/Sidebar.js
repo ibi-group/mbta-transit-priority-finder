@@ -8,13 +8,22 @@ const Sidebar = (props) => {
   const [w2, setW2] = useState({ x: 1 });
   const [w3, setW3] = useState({ x: 1 });
   const [w4, setW4] = useState({ x: 1 });
+  const [error, setError] = useState(false);
 
   const sliderRange = [1, 8];
   const inputRef = useRef();
+  const maxValue = Math.max(...props.data);
 
   const submitHandler = () => {
     const data = { w1: w1.x, w2: w2.x, w3: w3.x, w4: w4.x };
-    props.adjustFilters(data, inputRef.current.value);
+
+    let filter = inputRef.current.value;
+    if (filter >= maxValue) {
+      setError(true);
+      return;
+    }
+    setError(false);
+    props.adjustFilters(data, filter);
   };
 
   return (
@@ -31,19 +40,23 @@ const Sidebar = (props) => {
       <SliderInput range={sliderRange} state={w3} setState={setW3} />
       <SliderInput range={sliderRange} state={w4} setState={setW4} />
       <div>
-        <p>Show segments with a score of at least</p>
-        <input
-          className={classes.inputField}
-          ref={inputRef}
-          type="number"
-          max={50}
-          min={0}
-        ></input>
-      </div>
-      <div className={classes.buttonset}>
-        <button className={classes.button} onClick={submitHandler}>
-          Calculate
-        </button>
+        <div className={classes.buttonset}>
+          <p style={{ margin: "0px" }}>
+            Show segments with a score of at least
+          </p>
+          <input
+            className={classes.inputField}
+            ref={inputRef}
+            type="number"
+            max={maxValue}
+            min={0}
+          ></input>
+
+          <button className={classes.button} onClick={submitHandler}>
+            Calculate
+          </button>
+        </div>
+        {error && <p>Threshold is too high</p>}
       </div>
       <Chart data={props.data} />
     </div>
