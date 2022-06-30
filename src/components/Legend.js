@@ -1,11 +1,6 @@
 import classes from "./Legend.module.css";
 
 const Legend = (props) => {
-  const labels = [];
-  for (let i = 0; i < props.breaks.length - 1; i++) {
-    labels.push(`${props.breaks[i]} to ${props.breaks[i + 1]}`);
-  }
-
   return (
     <div className={classes.container}>
       {props.colors.map((color, index) => {
@@ -15,7 +10,7 @@ const Legend = (props) => {
             key={color}
             style={{ backgroundColor: color }}
           >
-            <p className={classes.label}>{labels[index]}</p>
+            <p className={classes.label}>{index + 1}</p>
           </div>
         );
       })}

@@ -14,6 +14,7 @@ import { useState, useMemo } from "react";
 import Legend from "./Legend";
 import useRailRoutes from "./useRailRoutes";
 
+//Child component that listens for changes in zoom and sets state
 const SetDataonZoom = (props) => {
   const map = useMapEvents({
     zoom() {
@@ -27,14 +28,16 @@ const Map = ({ variable, values, data }) => {
   const [zoomLevel, setZoomLevel] = useState(13);
 
   const mapCenter = [42.3601, -71.0589];
+
+  //custom hook for getting data from the TransitLand API for the chosen mode
   const subway = useRailRoutes(1);
   const rail = useRailRoutes(2);
 
   //Create color scale
-  const colors = scale(["#FFB35C", "#1F91AD"]).colors(10);
-  const breaks = limits(values, "q", 10);
-  const colorScale = scale(colors).domain(breaks);
+  const colors = scale(["#FFB35C", "#1F91AD"]).colors(6);
+  const colorScale = scale(colors).domain([1, 6]);
 
+  //create a polyline for each segment of the data
   const computePolylines = (featureSet) => {
     const lines = featureSet.map(({ geometry, properties }) => {
       //reverse coords for polyline
@@ -68,9 +71,11 @@ const Map = ({ variable, values, data }) => {
             <br />
             <strong>Routes:</strong> {properties.route_name}
             <br />
-            <strong>Frequency:</strong> {properties.frequency}
+            <strong>All-Day Volume:</strong> {properties.frequency}
             <br />
             <strong>Max Frequency:</strong> {properties.max_freq}
+            <br />
+            <strong>Score</strong> {properties.total_score}
           </Popup>
         </Polyline>
       );
@@ -79,8 +84,10 @@ const Map = ({ variable, values, data }) => {
     return lines;
   };
 
+  //only recompute lines if the data has changed
   const lines = useMemo(() => computePolylines(data), [data]);
 
+  //styling configuration for map elements
   function styleLines(feature) {
     return {
       color: colorScale(feature.properties[variable]),
@@ -112,7 +119,7 @@ const Map = ({ variable, values, data }) => {
         {rail && <GeoJSON key={Math.random()} style={styleRail} data={rail} />}
         <SetDataonZoom setZoom={setZoomLevel} />
       </MapContainer>
-      <Legend colors={colors} breaks={breaks} />
+      <Legend colors={colors} />
     </div>
   );
 };

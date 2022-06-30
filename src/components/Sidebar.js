@@ -35,10 +35,32 @@ const Sidebar = (props) => {
           view both direction of travel
         </p>
       </div>
-      <SliderInput range={sliderRange} state={w1} setState={setW1} />
-      <SliderInput range={sliderRange} state={w2} setState={setW2} />
-      <SliderInput range={sliderRange} state={w3} setState={setW3} />
-      <SliderInput range={sliderRange} state={w4} setState={setW4} />
+      <div className={classes.sliders}>
+        <SliderInput
+          label="Frequency"
+          range={sliderRange}
+          state={w1}
+          setState={setW1}
+        />
+        <SliderInput
+          label="Excess Passenger Time"
+          range={sliderRange}
+          state={w2}
+          setState={setW2}
+        />
+        <SliderInput
+          label="Demographics"
+          range={sliderRange}
+          state={w3}
+          setState={setW3}
+        />
+        <SliderInput
+          label="Other factors"
+          range={sliderRange}
+          state={w4}
+          setState={setW4}
+        />
+      </div>
       <div>
         <div className={classes.buttonset}>
           <p style={{ margin: "0px" }}>

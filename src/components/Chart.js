@@ -1,17 +1,6 @@
 import { VerticalRectSeries, XYPlot, XAxis } from "react-vis/dist";
-import SliderInput from "./Slider";
-import { useState, useEffect } from "react";
 
 const Chart = ({ data }) => {
-  const [sliderRange, setSliderRange] = useState([]);
-  const [binWidth, setBinWidth] = useState({ x: 5 });
-
-  useEffect(() => {
-    const range = [5, 20];
-    setSliderRange(range);
-    setBinWidth({ x: range[0] });
-  }, []);
-
   function histogram(X, binRange) {
     //inclusive of the first number
     let max = Math.max(...X);
@@ -35,7 +24,7 @@ const Chart = ({ data }) => {
     return data;
   }
 
-  const chartData = histogram(data, binWidth.x);
+  const chartData = histogram(data, 1);
 
   return (
     <div>
@@ -53,11 +42,6 @@ const Chart = ({ data }) => {
           data={chartData}
         ></VerticalRectSeries>
       </XYPlot>
-      <SliderInput
-        range={sliderRange}
-        state={binWidth}
-        setState={setBinWidth}
-      />
     </div>
   );
 };

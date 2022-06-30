@@ -1,8 +1,10 @@
 import Slider from "react-input-slider";
+import { Fragment } from "react";
 
 const SliderInput = (props) => {
   return (
-    <div>
+    <Fragment>
+      <p>{props.label}</p>
       <Slider
         styles={{
           active: {
@@ -19,7 +21,7 @@ const SliderInput = (props) => {
         onChange={({ x }) => props.setState((state) => ({ ...state, x }))}
       />
       <p>{props.state.x}</p>
-    </div>
+    </Fragment>
   );
 };
 

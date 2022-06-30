@@ -27,22 +27,24 @@ function App() {
 
   function recalculateScore(weights, filter) {
     setLoading(true);
+    const { w1, w2, w3, w4 } = weights;
+
     const newData = segmentData.features
       .map((d) => {
-        const score1 = d.properties.freq_score * weights.w1;
-        const score2 = d.properties.time_variability * weights.w2;
-        const score3 = d.properties.demographics * weights.w3;
-        const score4 = d.properties.other_factors * weights.w4;
+        const score1 = d.properties.freq_score * w1;
+        const score2 = d.properties.time_variability * w2;
+        const score3 = d.properties.demographics * w3;
+        const score4 = d.properties.other_factors * w4;
+
+        const weightedAvg = Math.round(
+          (score1 + score2 + score3 + score4) / (w1 + w2 + w3 + w4)
+        );
 
         return {
           type: d.type,
           properties: {
             ...d.properties,
-            freq_score: score1,
-            time_variability: score2,
-            demographics: score3,
-            other_factors: score4,
-            total_score: score1 + score2 + score3 + score4,
+            total_score: weightedAvg,
           },
           geometry: d.geometry,
         };

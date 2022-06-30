@@ -10,7 +10,8 @@
 }
 
 .header {
-  padding: 20px;
+  padding: 0px 20px;
+  text-align: left;
 }
 
 .buttonset {
@@ -52,4 +53,14 @@
   background-color: rgba(255, 255, 255, 0.5);
   transition: transform 200ms, background-color 500ms;
   outline: none;
+}
+
+.sliders {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: auto;
+  text-align: left;
+  padding: 20px;
+  align-items: center;
+  column-gap: 20px;
 }
