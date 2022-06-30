@@ -1,6 +1,8 @@
 import classes from "./Legend.module.css";
 
 const Legend = (props) => {
+  const grades = ["F", "E", "D", "C", "B", "A"];
+
   return (
     <div className={classes.container}>
       {props.colors.map((color, index) => {
@@ -10,7 +12,7 @@ const Legend = (props) => {
             key={color}
             style={{ backgroundColor: color }}
           >
-            <p className={classes.label}>{index + 1}</p>
+            <p className={classes.label}>{grades[index]}</p>
           </div>
         );
       })}

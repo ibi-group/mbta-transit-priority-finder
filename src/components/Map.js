@@ -9,7 +9,7 @@ import {
 import classes from "./Map.module.css";
 import "leaflet/dist/leaflet.css";
 import "leaflet-polylineoffset";
-import { scale, limits } from "chroma-js";
+import { scale } from "chroma-js";
 import { useState, useMemo } from "react";
 import Legend from "./Legend";
 import useRailRoutes from "./useRailRoutes";
@@ -24,7 +24,7 @@ const SetDataonZoom = (props) => {
   return null;
 };
 
-const Map = ({ variable, values, data }) => {
+const Map = ({ variable, data }) => {
   const [zoomLevel, setZoomLevel] = useState(13);
 
   const mapCenter = [42.3601, -71.0589];

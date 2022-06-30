@@ -10,7 +10,7 @@ const Sidebar = (props) => {
   const [w4, setW4] = useState({ x: 1 });
   const [error, setError] = useState(false);
 
-  const sliderRange = [1, 8];
+  const sliderRange = [0, 8];
   const inputRef = useRef();
   const maxValue = Math.max(...props.data);
 

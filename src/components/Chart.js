@@ -1,46 +1,47 @@
-import { VerticalRectSeries, XYPlot, XAxis } from "react-vis/dist";
+import {
+  VerticalBarSeries,
+  XYPlot,
+  XAxis,
+  YAxis,
+  LabelSeries,
+} from "react-vis/dist";
 
 const Chart = ({ data }) => {
-  function histogram(X, binRange) {
-    //inclusive of the first number
-    let max = Math.max(...X);
-    let min = Math.min(...X);
-    let len = max - min + 1;
-
-    let edges = [];
-    for (let i = min; i < max; i += binRange) {
-      edges.push([i, i + binRange]);
-    }
-
-    let numberOfBins = Math.ceil(len / binRange);
-    let bins = new Array(numberOfBins).fill(0);
-    //-min to normalise values for the array
-    X.forEach((x) => bins[Math.floor((x - min) / binRange)]++);
-
-    const data = edges.map((edge, index) => {
-      return { x0: edge[0], x: edge[1], y: bins[index] };
-    });
-
-    return data;
+  const counts = {};
+  for (const num of data) {
+    counts[num] = counts[num] ? (counts[num] += 1) : 1;
   }
 
-  const chartData = histogram(data, 1);
+  const grades = ["F", "E", "D", "C", "B", "A"];
+
+  const chartData = Object.entries(counts).map(function ([key, value], index) {
+    return { x: grades[index], y: value };
+  });
+
+  const labels = chartData.map((obj) => {
+    return {
+      ...obj,
+      label: String(obj.y),
+      yOffset: -10,
+      style: { fill: "#FFF", fontSize: "12px", fontWeight: "bold" },
+    };
+  });
 
   return (
-    <div>
-      <XYPlot height={250} width={300}>
-        <XAxis
-          style={{ stroke: "#FFFFFF", fontSize: "12px" }}
-          tickValues={[
-            ...chartData.map((d) => d.x),
-            chartData[chartData.length - 1].x0,
-          ]}
-        />
-        <VerticalRectSeries
+    <div style={{ paddingTop: "10px" }}>
+      <XYPlot margin={{ top: 20 }} xType="ordinal" height={250} width={300}>
+        <XAxis style={{ stroke: "#FFFFFF", fontSize: "12px" }} />
+        <YAxis />
+        <VerticalBarSeries
           animation
           stroke="#121212"
           data={chartData}
-        ></VerticalRectSeries>
+        ></VerticalBarSeries>
+        <LabelSeries
+          data={labels}
+          labelAnchorX="middle"
+          labelAnchorY="middle"
+        ></LabelSeries>
       </XYPlot>
     </div>
   );

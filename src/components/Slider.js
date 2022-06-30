@@ -1,17 +1,25 @@
 import Slider from "react-input-slider";
 import { Fragment } from "react";
+import "./slider.css";
 
 const SliderInput = (props) => {
+  const disabled = props.state.x === 0 ? true : false;
+
   return (
     <Fragment>
-      <p>{props.label}</p>
+      <p className={disabled ? "text-disabled" : ""}>{props.label}</p>
       <Slider
         styles={{
           active: {
             backgroundColor: "#1F91AD",
           },
           track: {
-            backgroundColor: "rgba(255,255,255, .2)",
+            backgroundColor: disabled
+              ? "rgba(255,255,255,.1)"
+              : "rgba(255,255,255, .2)",
+          },
+          thumb: {
+            backgroundColor: disabled ? "grey" : "#FFF",
           },
         }}
         axis="x"
@@ -20,7 +28,7 @@ const SliderInput = (props) => {
         xmax={props.range[1]}
         onChange={({ x }) => props.setState((state) => ({ ...state, x }))}
       />
-      <p>{props.state.x}</p>
+      <p className={disabled ? "text-disabled" : ""}>{props.state.x}</p>
     </Fragment>
   );
 };
