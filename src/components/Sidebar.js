@@ -49,13 +49,13 @@ const Sidebar = (props) => {
           setState={setW2}
         />
         <SliderInput
-          label="Demographics"
+          label="Travel Time"
           range={sliderRange}
           state={w3}
           setState={setW3}
         />
         <SliderInput
-          label="Other factors"
+          label="Travel Time Variability"
           range={sliderRange}
           state={w4}
           setState={setW4}

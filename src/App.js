@@ -1,7 +1,7 @@
 import "./App.css";
 import Map from "./components/Map";
 import Sidebar from "./components/Sidebar";
-import segmentData from "./Data/mbta_proposed_segments.json";
+import segmentData from "./Data/mbta_segments_all_lines.json";
 import { useState, useMemo } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
 
@@ -33,8 +33,8 @@ function App() {
       .map((d) => {
         const score1 = d.properties.freq_score * w1;
         const score2 = d.properties.time_variability * w2;
-        const score3 = d.properties.demographics * w3;
-        const score4 = d.properties.other_factors * w4;
+        const score3 = d.properties.travel_time * w3;
+        const score4 = d.properties.xpt * w4;
 
         const weightedAvg = Math.round(
           (score1 + score2 + score3 + score4) / (w1 + w2 + w3 + w4)

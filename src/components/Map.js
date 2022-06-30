@@ -45,14 +45,13 @@ const Map = ({ variable, data }) => {
         return [pair[1], pair[0]];
       });
 
-      const IB = properties.dir_id === "Inbound";
       const freq = properties[variable];
 
       const options = {
         weight: 3,
-        color: IB ? colorScale(freq) : colorScale(freq),
-        offset: IB ? 5 : 0,
-        dashArray: IB ? "10, 5" : "",
+        color: colorScale(freq),
+        offset: 5,
+        //dashArray: IB ? "10, 5" : "",
       };
 
       return (
@@ -67,7 +66,7 @@ const Map = ({ variable, data }) => {
           }}
         >
           <Popup>
-            <strong>Direction:</strong> {properties.dir_id}
+            <strong>Segment:</strong> {properties.segment_id}
             <br />
             <strong>Routes:</strong> {properties.route_name}
             <br />
