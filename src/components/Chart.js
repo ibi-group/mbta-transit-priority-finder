@@ -12,7 +12,7 @@ const Chart = ({ data }) => {
     counts[num] = counts[num] ? (counts[num] += 1) : 1;
   }
 
-  const grades = ["F", "E", "D", "C", "B", "A"];
+  const grades = ["1", "2", "3", "4", "5", "6"];
 
   const chartData = Object.entries(counts).map(function ([key, value], index) {
     return { x: grades[index], y: value };

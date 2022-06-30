@@ -1,7 +1,7 @@
 import classes from "./Legend.module.css";
 
 const Legend = (props) => {
-  const grades = ["F", "E", "D", "C", "B", "A"];
+  const grades = ["1", "2", "3", "4", "5", "6"];
 
   return (
     <div className={classes.container}>
