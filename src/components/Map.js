@@ -52,7 +52,7 @@ const Map = ({ variable, data }) => {
       const options = {
         weight: 3,
         color: colorScale(freq),
-        offset: -2,
+        offset: -5,
         //dashArray: IB ? "10, 5" : "",
       };
 
@@ -68,7 +68,9 @@ const Map = ({ variable, data }) => {
           }}
         >
           <Popup>
-            <strong>Segment:</strong> {properties.segment_id}
+            <strong>Start Stop:</strong> {properties.s_st_name}
+            <br />
+            <strong>End Stop:</strong> {properties.e_st_name}
             <br />
             <strong>Routes:</strong> {properties.route_name}
             <br />
@@ -109,7 +111,7 @@ const Map = ({ variable, data }) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiaWJpLXRyYW5zaXQtZGF0YS10ZWFtIiwiYSI6ImNrcDI4aHFzMzFpMmcydnF3OHd5N3Z0OW8ifQ.IwReYu0rGZko64sy2mbPSg"
         />
-        {zoomLevel >= 14 ? (
+        {zoomLevel >= 16 ? (
           lines
         ) : (
           <GeoJSON key={Math.random()} style={styleLines} data={data} />
