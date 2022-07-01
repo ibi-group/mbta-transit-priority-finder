@@ -5,9 +5,9 @@ import Chart from "./Chart";
 
 const Sidebar = (props) => {
   const [w1, setW1] = useState({ x: 1 });
-  const [w2, setW2] = useState({ x: 1 });
-  const [w3, setW3] = useState({ x: 1 });
-  const [w4, setW4] = useState({ x: 1 });
+  const [w2, setW2] = useState({ x: 0 });
+  const [w3, setW3] = useState({ x: 0 });
+  const [w4, setW4] = useState({ x: 0 });
   const [error, setError] = useState(false);
 
   const sliderRange = [0, 8];

@@ -14,6 +14,8 @@ import { useState, useMemo } from "react";
 import Legend from "./Legend";
 import useRailRoutes from "./useRailRoutes";
 
+//Polyline offset circles issue doc: https://stackoverflow.com/questions/53708398/leaflet-polyline-precision-loss-on-zoom-out
+
 //Child component that listens for changes in zoom and sets state
 const SetDataonZoom = (props) => {
   const map = useMapEvents({
@@ -50,7 +52,7 @@ const Map = ({ variable, data }) => {
       const options = {
         weight: 3,
         color: colorScale(freq),
-        offset: 5,
+        offset: -2,
         //dashArray: IB ? "10, 5" : "",
       };
 
