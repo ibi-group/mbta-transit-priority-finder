@@ -6,7 +6,7 @@ import { useState, useMemo } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
 
 function App() {
-  const [weights, setWeights] = useState({ w1: 1, w2: 1, w3: 1, w4: 1 });
+  const [weights, setWeights] = useState({ w1: 1, w2: 0, w3: 0, w4: 0 });
   const [filter, setFilter] = useState(0);
   const [loading, setLoading] = useState(false);
   const variable = "total_score";
