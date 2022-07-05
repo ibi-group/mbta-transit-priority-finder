@@ -53,11 +53,7 @@ const Map = ({ variable, data }) => {
         weight: 3,
         color: colorScale(freq),
         offset: -5,
-<<<<<<< HEAD
         dashArray: properties?.side === "Side1" ? "10, 5" : "",
-=======
-        //dashArray: IB ? "10, 5" : "",
->>>>>>> 7bfecee9d7d83a269acba08705c2b1531b64aa03
       };
 
       return (
