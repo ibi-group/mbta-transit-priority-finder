@@ -57,7 +57,7 @@ function App() {
     return [newData, values];
   }
 
-  //this is still re-computing every time even though it's wrapped in useMemo
+  //recalculate score when weights or filter changes
   const [mapData, scoreValues] = useMemo(
     () => recalculateScore(weights, filter),
     [weights, filter]
