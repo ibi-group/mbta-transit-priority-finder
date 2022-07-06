@@ -13,6 +13,8 @@ import { scale } from "chroma-js";
 import { useState, useMemo } from "react";
 import Legend from "./Legend";
 import useRailRoutes from "./useRailRoutes";
+import stopData from "../Data/proposed_stops.json";
+import L from "leaflet";
 
 //Polyline offset circles issue doc: https://stackoverflow.com/questions/53708398/leaflet-polyline-precision-loss-on-zoom-out
 
@@ -52,7 +54,7 @@ const Map = ({ variable, data }) => {
       const options = {
         weight: 3,
         color: colorScale(freq),
-        offset: -5,
+        offset: 5,
         dashArray: properties?.side === "Side1" ? "10, 5" : "",
       };
 
@@ -104,6 +106,19 @@ const Map = ({ variable, data }) => {
     };
   }
 
+  function createCircleMarker(feature, latlng) {
+    // Change the values of these options to change the symbol's appearance
+    let options = {
+      radius: 5,
+      fillColor: "lightgrey",
+      color: "grey",
+      weight: 1,
+      opacity: 1,
+      fillOpacity: 0.8,
+    };
+    return L.circleMarker(latlng, options);
+  }
+
   return (
     <div className={classes.map}>
       <MapContainer center={mapCenter} zoom={13} minZoom={10} maxZoom={18}>
@@ -120,6 +135,7 @@ const Map = ({ variable, data }) => {
           <GeoJSON key={Math.random()} style={styleRail} data={subway} />
         )}
         {rail && <GeoJSON key={Math.random()} style={styleRail} data={rail} />}
+        <GeoJSON data={stopData.features} pointToLayer={createCircleMarker} />
         <SetDataonZoom setZoom={setZoomLevel} />
       </MapContainer>
       <Legend colors={colors} />
