@@ -1,12 +1,16 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { useMapEvents, Popup, Polyline, GeoJSON } from "react-leaflet";
 import classes from "./Map.module.css";
 
 //Child component that listens for changes in zoom and sets state
-const SegmentsOverlay = ({ variable, data, scale }) => {
-  const [zoomLevel, setZoomLevel] = useState(13);
-  const showBothSides = zoomLevel >= 16 ? true : false;
-
+const SegmentsOverlay = ({
+  variable,
+  data,
+  scale,
+  setZoomLevel,
+  showBothSides,
+}) => {
+  //tracks the zoom level
   const map = useMapEvents({
     zoom() {
       setZoomLevel(map.getZoom());

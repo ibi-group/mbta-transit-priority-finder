@@ -7,11 +7,14 @@ import Legend from "./Legend";
 import useRailRoutes from "./useRailRoutes";
 import SegmentsOverlay from "./SegmentsOverlay";
 import StopsOverlay from "./StopsOverlay";
+import { useState } from "react";
 
 //Polyline offset circles issue doc: https://stackoverflow.com/questions/53708398/leaflet-polyline-precision-loss-on-zoom-out
 
 const Map = ({ variable, data }) => {
-  console.log("map parent is rendering");
+  const [zoomLevel, setZoomLevel] = useState(13);
+  const showBothSides = zoomLevel >= 16 ? true : false;
+  const showStops = zoomLevel >= 14 ? true : false;
   const mapCenter = [42.3601, -71.0589];
 
   //Create color scale
@@ -36,12 +39,18 @@ const Map = ({ variable, data }) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiaWJpLXRyYW5zaXQtZGF0YS10ZWFtIiwiYSI6ImNrcDI4aHFzMzFpMmcydnF3OHd5N3Z0OW8ifQ.IwReYu0rGZko64sy2mbPSg"
         />
-        <SegmentsOverlay variable={variable} data={data} scale={colorScale} />
+        <SegmentsOverlay
+          variable={variable}
+          data={data}
+          scale={colorScale}
+          showBothSides={showBothSides}
+          setZoomLevel={setZoomLevel}
+        />
         {subway && (
           <GeoJSON key={Math.random()} style={styleRail} data={subway} />
         )}
         {rail && <GeoJSON key={Math.random()} style={styleRail} data={rail} />}
-        <StopsOverlay />
+        {showStops && <StopsOverlay />}
       </MapContainer>
       <Legend colors={colors} />
     </div>
