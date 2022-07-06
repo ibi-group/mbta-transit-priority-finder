@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useMapEvents, Popup, Polyline, GeoJSON } from "react-leaflet";
+import { useMapEvents, Popup, Polyline, GeoJSON, Pane } from "react-leaflet";
 import classes from "./Map.module.css";
 
 //Child component that listens for changes in zoom and sets state
@@ -45,7 +45,7 @@ const SegmentsOverlay = ({
             mouseout: (e) => e.target.setStyle({ weight: 3 }),
           }}
         >
-          <Popup>
+          <Popup pane="segment-tooltip">
             <strong>Start Stop:</strong> {properties.s_st_name}
             <br />
             <strong>End Stop:</strong> {properties.e_st_name}
@@ -86,7 +86,11 @@ const SegmentsOverlay = ({
   }, [showBothSides, data, lines]);
 
   //render method
-  return renderedLayer;
+  return (
+    <Pane name="segments" style={{ zIndex: 450 }}>
+      {renderedLayer}
+    </Pane>
+  );
 };
 
 export default SegmentsOverlay;

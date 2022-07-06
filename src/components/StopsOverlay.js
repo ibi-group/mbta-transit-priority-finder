@@ -11,7 +11,8 @@ const StopsOverlay = () => {
       color: "grey",
       weight: 1,
       opacity: 1,
-      fillOpacity: 0.8,
+      fillOpacity: 1,
+      pane: "stops-overlay",
     };
     return L.circleMarker(latlng, options);
   }
@@ -27,6 +28,7 @@ const StopsOverlay = () => {
 
   return (
     <GeoJSON
+      key={Math.random()}
       data={stopData.features}
       pointToLayer={createCircleMarker}
       onEachFeature={makePopup}
