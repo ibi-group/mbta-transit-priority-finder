@@ -26,9 +26,11 @@ const SegmentsOverlay = ({
       });
 
       const freq = properties[variable];
+      const newSegment = properties._merge === "left_only";
 
       const options = {
-        weight: 3,
+        weight: newSegment ? 2 : 4,
+        opacity: newSegment ? 0.7 : 1,
         color: scale(freq),
         offset: 5,
         dashArray: properties?.side === "Side1" ? "10, 5" : "",
