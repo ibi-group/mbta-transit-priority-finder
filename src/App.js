@@ -8,7 +8,7 @@ import { initialWeights } from "./globals";
 
 function App() {
   const [weights, setWeights] = useState(initialWeights);
-  const [filter, setFilter] = useState(0);
+  const [filter, setFilter] = useState(1);
   const [loading, setLoading] = useState(false);
   const variable = "total_score";
 

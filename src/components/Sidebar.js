@@ -2,7 +2,7 @@ import classes from "./Sidebar.module.css";
 import { useState, useRef } from "react";
 import SliderInput from "./Slider";
 import Chart from "./Chart";
-import { initialWeights, colors } from "../globals";
+import { initialWeights, colors, grades } from "../globals";
 
 const Sidebar = (props) => {
   const { w1: weight1, w2: weight2, w3: weight3, w4: weight4 } = initialWeights;
@@ -21,7 +21,7 @@ const Sidebar = (props) => {
     const data = { w1: w1.x, w2: w2.x, w3: w3.x, w4: w4.x };
 
     let filter = inputRef.current.value;
-    if (filter >= maxValue) {
+    if (filter > maxValue) {
       setError(true);
       return;
     }
@@ -79,13 +79,25 @@ const Sidebar = (props) => {
           <p style={{ margin: "0px" }}>
             Show segments with a score of at least
           </p>
-          <input
+          <select
             className={classes.inputField}
             ref={inputRef}
             type="number"
             max={maxValue}
             min={0}
-          ></input>
+          >
+            {grades.map((g, idx) => {
+              return (
+                <option
+                  className={classes["dropdown-option"]}
+                  value={idx + 1}
+                  key={g}
+                >
+                  {g}
+                </option>
+              );
+            })}
+          </select>
 
           <button className={classes.button} onClick={submitHandler}>
             Calculate
