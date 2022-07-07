@@ -5,17 +5,18 @@ import {
   YAxis,
   LabelSeries,
 } from "react-vis/dist";
+import { grades, colors } from "../globals";
 
 const Chart = ({ data }) => {
   const counts = {};
-  for (const num of data) {
+  const validData = data.filter((d) => d !== null);
+
+  for (const num of validData) {
     counts[num] = counts[num] ? (counts[num] += 1) : 1;
   }
 
-  const grades = ["1", "2", "3", "4", "5", "6"];
-
-  const chartData = Object.entries(counts).map(function ([key, value], index) {
-    return { x: grades[index], y: value };
+  const chartData = Object.entries(counts).map(function ([key, value]) {
+    return { x: grades[key - 1], y: value, color: colors[key - 1] };
   });
 
   const labels = chartData.map((obj) => {
@@ -36,6 +37,7 @@ const Chart = ({ data }) => {
           animation
           stroke="#121212"
           data={chartData}
+          colorType="literal"
         ></VerticalBarSeries>
         <LabelSeries
           data={labels}

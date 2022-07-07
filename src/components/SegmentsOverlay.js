@@ -70,8 +70,13 @@ const SegmentsOverlay = ({
 
   //styling configuration for map elements
   function styleLines(feature) {
+    const newSegment = feature.properties._merge === "left_only";
+
     return {
       color: scale(feature.properties[variable]),
+      opacity: newSegment ? 0.7 : 1,
+      weight: newSegment ? 2 : 4,
+      lineJoin: "round",
     };
   }
 

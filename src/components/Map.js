@@ -8,6 +8,7 @@ import useRailRoutes from "./useRailRoutes";
 import SegmentsOverlay from "./SegmentsOverlay";
 import StopsOverlay from "./StopsOverlay";
 import { useState } from "react";
+import { colors } from "../globals";
 
 //Polyline offset circles issue doc: https://stackoverflow.com/questions/53708398/leaflet-polyline-precision-loss-on-zoom-out
 
@@ -18,7 +19,6 @@ const Map = ({ variable, data }) => {
   const mapCenter = [42.3601, -71.0589];
 
   //Create color scale
-  const colors = scale(["#FFB35C", "#1F91AD"]).colors(6);
   const colorScale = scale(colors).domain([1, 6]);
 
   //custom hook for getting data from the TransitLand API for the chosen mode

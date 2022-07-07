@@ -4,9 +4,10 @@ import Sidebar from "./components/Sidebar";
 import segmentData from "./Data/mbta_segments_all_lines.json";
 import { useState, useMemo } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
+import { initialWeights } from "./globals";
 
 function App() {
-  const [weights, setWeights] = useState({ w1: 1, w2: 0, w3: 0, w4: 0 });
+  const [weights, setWeights] = useState(initialWeights);
   const [filter, setFilter] = useState(0);
   const [loading, setLoading] = useState(false);
   const variable = "total_score";
@@ -31,10 +32,13 @@ function App() {
 
     const newData = segmentData.features
       .map((d) => {
-        const score1 = d.properties.freq_score * w1;
-        const score2 = d.properties.time_variability * w2;
-        const score3 = d.properties.travel_time * w3;
-        const score4 = d.properties.xpt * w4;
+        const { freq_score, time_variability, travel_time, xpt, _merge } =
+          d.properties;
+
+        const score1 = freq_score * w1;
+        const score2 = time_variability * w2;
+        const score3 = travel_time * w3;
+        const score4 = xpt * w4;
 
         const weightedAvg = Math.round(
           (score1 + score2 + score3 + score4) / (w1 + w2 + w3 + w4)
@@ -44,7 +48,7 @@ function App() {
           type: d.type,
           properties: {
             ...d.properties,
-            total_score: weightedAvg,
+            total_score: _merge === "left_only" ? freq_score : weightedAvg,
           },
           geometry: d.geometry,
         };

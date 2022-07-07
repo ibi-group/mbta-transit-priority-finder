@@ -1,8 +1,7 @@
 import classes from "./Legend.module.css";
+import { grades } from "../globals";
 
 const Legend = (props) => {
-  const grades = ["1", "2", "3", "4", "5", "6"];
-
   return (
     <div className={classes.container}>
       {props.colors.map((color, index) => {

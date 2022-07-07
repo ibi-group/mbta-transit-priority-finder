@@ -2,12 +2,15 @@ import classes from "./Sidebar.module.css";
 import { useState, useRef } from "react";
 import SliderInput from "./Slider";
 import Chart from "./Chart";
+import { initialWeights, colors } from "../globals";
 
 const Sidebar = (props) => {
-  const [w1, setW1] = useState({ x: 1 });
-  const [w2, setW2] = useState({ x: 0 });
-  const [w3, setW3] = useState({ x: 0 });
-  const [w4, setW4] = useState({ x: 0 });
+  const { w1: weight1, w2: weight2, w3: weight3, w4: weight4 } = initialWeights;
+
+  const [w1, setW1] = useState({ x: weight1 });
+  const [w2, setW2] = useState({ x: weight2 });
+  const [w3, setW3] = useState({ x: weight3 });
+  const [w4, setW4] = useState({ x: weight4 });
   const [error, setError] = useState(false);
 
   const sliderRange = [0, 8];
@@ -26,6 +29,15 @@ const Sidebar = (props) => {
     props.adjustFilters(data, filter);
   };
 
+  const reset = () => {
+    setW1({ x: weight1 });
+    setW2({ x: weight2 });
+    setW3({ x: weight3 });
+    setW4({ x: weight4 });
+
+    inputRef.current.value = 0;
+  };
+
   return (
     <div className={classes.Sidebar}>
       <div className={classes.header}>
@@ -35,6 +47,7 @@ const Sidebar = (props) => {
           view both direction of travel
         </p>
       </div>
+      <Chart data={props.data} />
       <div className={classes.sliders}>
         <SliderInput
           label="Frequency"
@@ -77,10 +90,16 @@ const Sidebar = (props) => {
           <button className={classes.button} onClick={submitHandler}>
             Calculate
           </button>
+          <button
+            className={classes.button}
+            onClick={reset}
+            style={{ backgroundColor: colors[1] }}
+          >
+            Reset
+          </button>
         </div>
         {error && <p>Threshold is too high</p>}
       </div>
-      <Chart data={props.data} />
     </div>
   );
 };
