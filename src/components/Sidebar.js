@@ -4,7 +4,7 @@ import SliderInput from "./Slider";
 import Chart from "./Chart";
 import { initialWeights, colors, grades } from "../globals";
 
-const Sidebar = (props) => {
+const Sidebar = ({ data, adjustFilters, toggled, setToggled }) => {
   const { w1: weight1, w2: weight2, w3: weight3, w4: weight4 } = initialWeights;
 
   const [w1, setW1] = useState({ x: weight1 });
@@ -15,10 +15,10 @@ const Sidebar = (props) => {
 
   const sliderRange = [0, 8];
   const inputRef = useRef();
-  const maxValue = Math.max(...props.data);
+  const maxValue = Math.max(...data);
 
   const submitHandler = () => {
-    const data = { w1: w1.x, w2: w2.x, w3: w3.x, w4: w4.x };
+    const newWeights = { w1: w1.x, w2: w2.x, w3: w3.x, w4: w4.x };
 
     let filter = inputRef.current.value;
     if (filter > maxValue) {
@@ -26,7 +26,7 @@ const Sidebar = (props) => {
       return;
     }
     setError(false);
-    props.adjustFilters(data, filter);
+    adjustFilters(newWeights, filter);
   };
 
   const reset = () => {
@@ -38,6 +38,10 @@ const Sidebar = (props) => {
     inputRef.current.value = 0;
   };
 
+  const toggleHandler = () => {
+    setToggled((state) => (state === "2021" ? "2019" : "2021"));
+  };
+
   return (
     <div className={classes.Sidebar}>
       <div className={classes.header}>
@@ -47,7 +51,7 @@ const Sidebar = (props) => {
           view both direction of travel
         </p>
       </div>
-      <Chart data={props.data} />
+      <Chart data={data} />
       <div className={classes.sliders}>
         <SliderInput
           label="Frequency"
@@ -73,6 +77,17 @@ const Sidebar = (props) => {
           state={w4}
           setState={setW4}
         />
+        <div className={classes["toggle-container"]}>
+          <p>{toggled}</p>
+          <label className={classes["toggle-switch"]}>
+            <input
+              type="checkbox"
+              checked={toggled === "2021" ? true : false}
+              onChange={toggleHandler}
+            />
+            <span className={classes.switch} />
+          </label>
+        </div>
       </div>
       <div>
         <div className={classes.buttonset}>

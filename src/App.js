@@ -9,6 +9,7 @@ import { initialWeights } from "./globals";
 function App() {
   const [weights, setWeights] = useState(initialWeights);
   const [filter, setFilter] = useState(1);
+  const [year, setYear] = useState("2021");
   const [loading, setLoading] = useState(false);
   const variable = "total_score";
 
@@ -70,7 +71,12 @@ function App() {
   return (
     <div className="App">
       {loading && <LoadingSpinner />}
-      <Sidebar data={scoreValues} adjustFilters={adjustFilters} />
+      <Sidebar
+        data={scoreValues}
+        adjustFilters={adjustFilters}
+        toggled={year}
+        setToggled={setYear}
+      />
       <Map data={mapData} values={scoreValues} variable={variable} />
     </div>
   );
