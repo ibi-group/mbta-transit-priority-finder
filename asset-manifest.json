@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/mbta-transit-priority-finder/static/css/main.cc2152bb.css",
-    "main.js": "/mbta-transit-priority-finder/static/js/main.2e3341ba.js",
+    "main.css": "/mbta-transit-priority-finder/static/css/main.92fadc25.css",
+    "main.js": "/mbta-transit-priority-finder/static/js/main.0985e61b.js",
     "static/js/787.b250f72f.chunk.js": "/mbta-transit-priority-finder/static/js/787.b250f72f.chunk.js",
     "index.html": "/mbta-transit-priority-finder/index.html",
-    "main.cc2152bb.css.map": "/mbta-transit-priority-finder/static/css/main.cc2152bb.css.map",
-    "main.2e3341ba.js.map": "/mbta-transit-priority-finder/static/js/main.2e3341ba.js.map",
+    "main.92fadc25.css.map": "/mbta-transit-priority-finder/static/css/main.92fadc25.css.map",
+    "main.0985e61b.js.map": "/mbta-transit-priority-finder/static/js/main.0985e61b.js.map",
     "787.b250f72f.chunk.js.map": "/mbta-transit-priority-finder/static/js/787.b250f72f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.cc2152bb.css",
-    "static/js/main.2e3341ba.js"
+    "static/css/main.92fadc25.css",
+    "static/js/main.0985e61b.js"
   ]
 }
