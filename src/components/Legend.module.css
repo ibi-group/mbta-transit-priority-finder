@@ -33,3 +33,9 @@
   text-align: left;
   gap: 10px;
 }
+
+.expand-btn {
+  background-color: #121212;
+  color: #fff;
+  cursor: pointer;
+}
