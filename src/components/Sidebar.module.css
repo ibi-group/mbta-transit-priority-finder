@@ -12,6 +12,8 @@
 .header {
   padding: 0px 20px;
   text-align: left;
+  display: flex;
+  gap: 20px;
 }
 
 .buttonset {
@@ -106,8 +108,8 @@
 }
 .toggle-switch input[type="checkbox"]:checked + .switch::before {
   transform: translateX(25px);
-  background-color: #6699cc;
+  background-color: #fff;
 }
 .toggle-switch input[type="checkbox"]:checked + .switch {
-  background-color: #336699;
+  background-color: #1f91ad;
 }

@@ -26,13 +26,13 @@ const SegmentsOverlay = ({
       });
 
       const freq = properties[variable];
-      const newSegment = properties._merge === "left_only";
+      const newSegment = properties.merge2021 === "left_only";
 
       const options = {
         weight: newSegment ? 2 : 4,
         opacity: newSegment ? 0.7 : 1,
         color: scale(freq),
-        offset: 5,
+        offset: 10,
         dashArray: properties?.side === "Side1" ? "10, 5" : "",
       };
 
@@ -72,7 +72,7 @@ const SegmentsOverlay = ({
 
   //styling configuration for map elements
   function styleLines(feature) {
-    const newSegment = feature.properties._merge === "left_only";
+    const newSegment = feature.properties.merge2021 === "left_only";
 
     return {
       color: scale(feature.properties[variable]),

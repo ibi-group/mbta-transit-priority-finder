@@ -44,12 +44,23 @@ const Sidebar = ({ data, adjustFilters, toggled, setToggled }) => {
 
   return (
     <div className={classes.Sidebar}>
+      <h2>MBTA Transit Priority Analysis</h2>
       <div className={classes.header}>
-        <h2>MBTA Transit Priority Analysis</h2>
         <p>
           Adjust the sliders to change the weights of each factor. Zoom in to
           view both direction of travel
         </p>
+        <div className={classes["toggle-container"]}>
+          <p>{toggled}</p>
+          <label className={classes["toggle-switch"]}>
+            <input
+              type="checkbox"
+              checked={toggled === "2021" ? true : false}
+              onChange={toggleHandler}
+            />
+            <span className={classes.switch} />
+          </label>
+        </div>
       </div>
       <Chart data={data} />
       <div className={classes.sliders}>
@@ -77,17 +88,6 @@ const Sidebar = ({ data, adjustFilters, toggled, setToggled }) => {
           state={w4}
           setState={setW4}
         />
-        <div className={classes["toggle-container"]}>
-          <p>{toggled}</p>
-          <label className={classes["toggle-switch"]}>
-            <input
-              type="checkbox"
-              checked={toggled === "2021" ? true : false}
-              onChange={toggleHandler}
-            />
-            <span className={classes.switch} />
-          </label>
-        </div>
       </div>
       <div>
         <div className={classes.buttonset}>

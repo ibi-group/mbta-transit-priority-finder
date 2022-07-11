@@ -2,7 +2,7 @@ import "./App.css";
 import Map from "./components/Map";
 import Sidebar from "./components/Sidebar";
 import segmentData from "./Data/mbta_segments_all_lines.json";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
 import { initialWeights } from "./globals";
 
@@ -27,14 +27,23 @@ function App() {
     }
   }
 
-  function recalculateScore(weights, filter) {
+  const recalculateScore = useCallback((weights, filter, year) => {
     setLoading(true);
     const { w1, w2, w3, w4 } = weights;
+    const cols =
+      year === "2021"
+        ? ["time_variability", "xpt", "travel_time"]
+        : ["time_variability2019", "xpt2019", "travel_time2019"];
 
     const newData = segmentData.features
       .map((d) => {
-        const { freq_score, time_variability, travel_time, xpt, _merge } =
-          d.properties;
+        const {
+          freq_score,
+          [cols[0]]: time_variability,
+          [cols[1]]: xpt,
+          [cols[2]]: travel_time,
+          _merge,
+        } = d.properties;
 
         const score1 = freq_score * w1;
         const score2 = time_variability * w2;
@@ -60,12 +69,12 @@ function App() {
     setLoading(false);
 
     return [newData, values];
-  }
+  }, []);
 
   //recalculate score when weights or filter changes
   const [mapData, scoreValues] = useMemo(
-    () => recalculateScore(weights, filter),
-    [weights, filter]
+    () => recalculateScore(weights, filter, year),
+    [recalculateScore, weights, filter, year]
   );
 
   return (
