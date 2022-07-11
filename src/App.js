@@ -5,6 +5,7 @@ import segmentData from "./Data/mbta_segments_all_lines.json";
 import { useState, useMemo, useCallback } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
 import { initialWeights } from "./globals";
+import Explainer from "./components/Explainer";
 
 function App() {
   const [weights, setWeights] = useState(initialWeights);
@@ -80,6 +81,7 @@ function App() {
   return (
     <div className="App">
       {loading && <LoadingSpinner />}
+      <Explainer />
       <Sidebar
         data={scoreValues}
         adjustFilters={adjustFilters}

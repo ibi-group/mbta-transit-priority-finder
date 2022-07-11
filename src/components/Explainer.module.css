@@ -1,0 +1,55 @@
+.container-collapsed {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  border-radius: 10px;
+  background-color: #121212;
+  z-index: 10;
+  padding: 10px;
+  max-width: 100px;
+  font-size: 10px;
+}
+
+.container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 60%;
+  background-color: #121212;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+}
+
+.modal-background {
+  background-color: #121212;
+  opacity: 0.3;
+  z-index: 8;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.button {
+  color: #fff;
+  background-color: #121212;
+  cursor: pointer;
+}
+
+.metric-btn {
+  background-color: #121212;
+  color: #fff;
+  font-size: 14px;
+}
+
+.metric-btn-active {
+  color: #1f91ad;
+  background-color: #121212;
+  font-size: 14px;
+}
+
+.text-container {
+  text-align: left;
+}

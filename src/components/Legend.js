@@ -4,6 +4,15 @@ import { useState } from "react";
 
 const Legend = (props) => {
   const [collapsed, setCollapsed] = useState(true);
+  const descriptions = [
+    "Very Low",
+    "Low",
+    "Medium-Low",
+    "Medium-High",
+    "High",
+    "Very High",
+  ];
+
   return (
     <div className={classes.container}>
       <button
@@ -65,7 +74,7 @@ const Legend = (props) => {
               >
                 <p className={classes.label}>{grades[index]}</p>
               </div>
-              {!collapsed && <p>Text Description</p>}
+              {!collapsed && <p>{descriptions[index]} Priority</p>}
             </div>
           );
         })}

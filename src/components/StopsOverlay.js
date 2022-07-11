@@ -5,10 +5,12 @@ import L from "leaflet";
 const StopsOverlay = () => {
   function createCircleMarker(feature, latlng) {
     // Change the values of these options to change the symbol's appearance
+    const rail = feature.properties.type === "rail";
+
     let options = {
-      radius: 5,
-      fillColor: "lightgrey",
-      color: "grey",
+      radius: rail ? 3 : 5,
+      fillColor: rail ? "#D6AEC0" : "lightgrey",
+      color: rail ? "#D6AEC0" : "grey",
       weight: 1,
       opacity: 1,
       fillOpacity: 1,

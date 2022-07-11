@@ -15,7 +15,7 @@ import { colors } from "../globals";
 const Map = ({ variable, data }) => {
   const [zoomLevel, setZoomLevel] = useState(13);
   const showBothSides = zoomLevel >= 16 ? true : false;
-  const showStops = zoomLevel >= 14 ? true : false;
+  const showStops = zoomLevel >= 15 ? true : false;
   const mapCenter = [42.3601, -71.0589];
 
   //Create color scale
@@ -24,6 +24,7 @@ const Map = ({ variable, data }) => {
   //custom hook for getting data from the TransitLand API for the chosen mode
   const subway = useRailRoutes(1);
   const rail = useRailRoutes(2);
+  const lightRail = useRailRoutes(0);
 
   function styleRail(feature) {
     return {
@@ -52,6 +53,9 @@ const Map = ({ variable, data }) => {
           )}
           {rail && (
             <GeoJSON key={Math.random()} style={styleRail} data={rail} />
+          )}
+          {lightRail && (
+            <GeoJSON key={Math.random()} style={styleRail} data={lightRail} />
           )}
         </Pane>
         <Pane name="basemap" style={{ zIndex: 300 }}>
