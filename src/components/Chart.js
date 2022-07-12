@@ -6,6 +6,7 @@ import {
   LabelSeries,
 } from "react-vis/dist";
 import { grades, colors } from "../globals";
+import React from "react";
 
 const Chart = ({ data }) => {
   const counts = {};

@@ -2,9 +2,13 @@ import classes from "./Explainer.module.css";
 import { Fragment, useState } from "react";
 import TextBlock from "./TextBlock";
 import React from "react";
+//@ts-ignore
 import frequencyLink from "../Descriptions/Frequency.md";
+//@ts-ignore
 import xptLink from "../Descriptions/Xpt.md";
+//@ts-ignore
 import variabilityLink from "../Descriptions/Variability.md";
+//@ts-ignore
 import travelTimeLink from "../Descriptions/TravelTime.md";
 
 enum Metrics {
