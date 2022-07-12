@@ -49,34 +49,33 @@ const Explainer = () => {
                 {m}
               </button>
             ))}
+
+            <TextBlock
+              name="Frequency"
+              metric={metric}
+              path={frequencyLink}
+              collapsed={collapsed}
+            />
+            <TextBlock
+              name="Excess Passenger Time"
+              metric={metric}
+              path={xptLink}
+              collapsed={collapsed}
+            />
+            <TextBlock
+              name="Travel Time"
+              metric={metric}
+              path={travelTimeLink}
+              collapsed={collapsed}
+            />
+            <TextBlock
+              name="Travel Time Variability"
+              metric={metric}
+              path={variabilityLink}
+              collapsed={collapsed}
+            />
           </div>
         )}
-        <div className={classes["text-container"]}>
-          <TextBlock
-            name="Frequency"
-            metric={metric}
-            path={frequencyLink}
-            collapsed={collapsed}
-          />
-          <TextBlock
-            name="Excess Passenger Time"
-            metric={metric}
-            path={xptLink}
-            collapsed={collapsed}
-          />
-          <TextBlock
-            name="Travel Time"
-            metric={metric}
-            path={travelTimeLink}
-            collapsed={collapsed}
-          />
-          <TextBlock
-            name="Travel Time Variability"
-            metric={metric}
-            path={variabilityLink}
-            collapsed={collapsed}
-          />
-        </div>
       </div>
     </Fragment>
   );

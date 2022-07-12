@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import classes from "./Explainer.module.css";
 
 function TextBlock({ name, path, metric, collapsed }) {
   const [text, setText] = useState(null);
@@ -12,11 +13,13 @@ function TextBlock({ name, path, metric, collapsed }) {
   }, []);
 
   return (
-    <div>
+    <Fragment>
       {metric === name && !collapsed && (
-        <ReactMarkdown children={text} remarkPlugins={remarkGfm} />
+        <div className={classes["text-container"]}>
+          <ReactMarkdown children={text} remarkPlugins={remarkGfm} />
+        </div>
       )}
-    </div>
+    </Fragment>
   );
 }
 
