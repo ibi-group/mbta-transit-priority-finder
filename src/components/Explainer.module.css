@@ -15,10 +15,12 @@
   top: 50%;
   left: 50%;
   width: 60%;
+  height: 60%;
   background-color: #121212;
   z-index: 10;
   transform: translate(-50%, -50%);
   padding: 10px;
+  overflow-y: scroll;
 }
 
 .modal-background {
@@ -42,6 +44,7 @@
   background-color: #121212;
   color: #fff;
   font-size: 14px;
+  cursor: pointer;
 }
 
 .metric-btn-active {
@@ -52,4 +55,5 @@
 
 .text-container {
   text-align: left;
+  padding: 15px;
 }

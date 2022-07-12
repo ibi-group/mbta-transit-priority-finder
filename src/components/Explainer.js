@@ -1,5 +1,10 @@
 import classes from "./Explainer.module.css";
 import { Fragment, useState } from "react";
+import frequencyLink from "../Descriptions/Frequency.md";
+import xptLink from "../Descriptions/Xpt.md";
+import variabilityLink from "../Descriptions/Variability.md";
+import travelTimeLink from "../Descriptions/TravelTime.md";
+import TextBlock from "./TextBlock";
 
 const Explainer = () => {
   const [collapsed, setCollapsed] = useState(true);
@@ -19,18 +24,6 @@ const Explainer = () => {
   const selectMetric = (event) => {
     setMetric(event.target.value);
   };
-
-  const frequencyInfo = (
-    <div className={classes["text-container"]}>
-      <h3>All-Day Volume</h3>
-      <p>
-        Total number of buses traveling both directions on this segment, on any
-        route, throughout the day
-      </p>
-      <h3>Max Hourly Frequency</h3>
-      <p>Number of buses observed in the single busiest hour of the day</p>
-    </div>
-  );
 
   return (
     <Fragment>
@@ -58,13 +51,31 @@ const Explainer = () => {
             ))}
           </div>
         )}
-        <div>
-          {metric === "Frequency" && !collapsed && frequencyInfo}
-          {metric === "Excess Passenger Time" && !collapsed && <p>XPT Info</p>}
-          {metric === "Travel Time" && !collapsed && <p>Travel Time Info</p>}
-          {metric === "Travel Time Variability" && !collapsed && (
-            <p>Variability Info</p>
-          )}
+        <div className={classes["text-container"]}>
+          <TextBlock
+            name="Frequency"
+            metric={metric}
+            path={frequencyLink}
+            collapsed={collapsed}
+          />
+          <TextBlock
+            name="Excess Passenger Time"
+            metric={metric}
+            path={xptLink}
+            collapsed={collapsed}
+          />
+          <TextBlock
+            name="Travel Time"
+            metric={metric}
+            path={travelTimeLink}
+            collapsed={collapsed}
+          />
+          <TextBlock
+            name="Travel Time Variability"
+            metric={metric}
+            path={variabilityLink}
+            collapsed={collapsed}
+          />
         </div>
       </div>
     </Fragment>
