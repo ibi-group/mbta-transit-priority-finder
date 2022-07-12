@@ -5,7 +5,7 @@ import segmentData from "./Data/mbta_segments_all_lines.json";
 import { useState, useMemo, useCallback } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
 import { initialWeights } from "./globals";
-import Explainer from "./components/Explainer";
+import Explainer from "./components/Explainer.tsx";
 
 function App() {
   const [weights, setWeights] = useState(initialWeights);

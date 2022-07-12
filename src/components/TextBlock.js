@@ -10,7 +10,7 @@ function TextBlock({ name, path, metric, collapsed }) {
     fetch(path)
       .then((res) => res.text())
       .then((md) => setText(md));
-  }, []);
+  }, [path]);
 
   return (
     <Fragment>
