@@ -46,7 +46,7 @@ function App() {
       setLoading(true);
       const { w1, w2, w3, w4 } = weights;
       const cols =
-        year === "2021"
+        year === Year.y2021
           ? ["time_variability", "xpt", "travel_time"]
           : ["time_variability2019", "xpt2019", "travel_time2019"];
 

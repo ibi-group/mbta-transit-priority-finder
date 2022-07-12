@@ -1,7 +1,6 @@
 import classes from "./Explainer.module.css";
 import { Fragment, useState } from "react";
 import TextBlock from "./TextBlock";
-import React from "react";
 //@ts-ignore
 import frequencyLink from "../Descriptions/Frequency.md";
 //@ts-ignore
@@ -33,7 +32,7 @@ const Explainer = () => {
     setCollapsed((state) => !state);
   };
 
-  const selectMetric = (event) => {
+  const selectMetric = (event: any) => {
     setMetric(event.target.value);
   };
 
