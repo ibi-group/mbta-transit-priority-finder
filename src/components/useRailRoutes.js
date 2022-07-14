@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 function useRailRoutes(type) {
   const [routes, setRoutes] = useState([]);
 
-  const API_KEY = "b2RU44pXMiPzCdedeiTtdwAS6EBBaEMX";
+  const API_KEY = process.env.REACT_APP_TRANSITLAND_KEY;
 
   async function fetchRoutes() {
     const response = await fetch(

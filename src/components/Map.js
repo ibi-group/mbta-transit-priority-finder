@@ -1,4 +1,10 @@
-import { MapContainer, TileLayer, GeoJSON, Pane } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  GeoJSON,
+  Pane,
+  LayersControl,
+} from "react-leaflet";
 import classes from "./Map.module.css";
 import "leaflet/dist/leaflet.css";
 import "leaflet-polylineoffset";
@@ -58,12 +64,21 @@ const Map = ({ variable, data }) => {
             <GeoJSON key={Math.random()} style={styleRail} data={lightRail} />
           )}
         </Pane>
-        <Pane name="basemap" style={{ zIndex: 300 }}>
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiaWJpLXRyYW5zaXQtZGF0YS10ZWFtIiwiYSI6ImNrcDI4aHFzMzFpMmcydnF3OHd5N3Z0OW8ifQ.IwReYu0rGZko64sy2mbPSg"
-          />
-        </Pane>
+        <LayersControl position="bottomleft">
+          <LayersControl.BaseLayer name="Streets" checked>
+            <Pane name="basemap" style={{ zIndex: 300 }}>
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url={`https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
+              />
+            </Pane>
+          </LayersControl.BaseLayer>
+          <LayersControl.BaseLayer name="Satellite">
+            <TileLayer
+              url={`https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v11/tiles/{z}/{x}/{y}?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
+            />
+          </LayersControl.BaseLayer>
+        </LayersControl>
       </MapContainer>
       <Legend colors={colors} />
     </div>
