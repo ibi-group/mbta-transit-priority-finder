@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useMapEvents, Popup, Polyline, GeoJSON, Pane } from "react-leaflet";
 import classes from "./Map.module.css";
+import { sharedCols } from "../globals";
 
 //Child component that listens for changes in zoom and sets state
 const SegmentsOverlay = ({
@@ -26,14 +27,14 @@ const SegmentsOverlay = ({
       });
 
       const freq = properties[variable];
-      const newSegment = properties.merge2021 === "left_only";
+      const newSegment = properties[sharedCols.merge21] === "left_only";
 
       const options = {
         weight: newSegment ? 2 : 4,
         opacity: newSegment ? 0.7 : 1,
         color: scale(freq),
         offset: 10,
-        dashArray: properties?.side === "Side1" ? "10, 5" : "",
+        dashArray: properties[sharedCols.side] === "Side1" ? "10, 5" : "",
       };
 
       return (
@@ -54,9 +55,10 @@ const SegmentsOverlay = ({
             <br />
             <strong>Routes:</strong> {properties.route_name}
             <br />
-            <strong>All-Day Volume:</strong> {properties.frequency}
+            <strong>All-Day Volume:</strong>{" "}
+            {properties[sharedCols.all_day_vol]}
             <br />
-            <strong>Max Frequency:</strong> {properties.max_freq}
+            <strong>Max Frequency:</strong> {properties[sharedCols.max_freq]}
             <br />
             <strong>Score</strong> {properties.total_score}
           </Popup>
@@ -72,7 +74,7 @@ const SegmentsOverlay = ({
 
   //styling configuration for map elements
   function styleLines(feature) {
-    const newSegment = feature.properties.merge2021 === "left_only";
+    const newSegment = feature.properties[sharedCols.merge21] === "left_only";
 
     return {
       color: scale(feature.properties[variable]),

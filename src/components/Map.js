@@ -64,7 +64,7 @@ const Map = ({ variable, data }) => {
             <GeoJSON key={Math.random()} style={styleRail} data={lightRail} />
           )}
         </Pane>
-        <LayersControl position="bottomleft">
+        <LayersControl position="topleft">
           <LayersControl.BaseLayer name="Streets" checked>
             <Pane name="basemap" style={{ zIndex: 300 }}>
               <TileLayer

@@ -5,12 +5,19 @@ import Chart from "./Chart";
 import { initialWeights, colors, grades } from "../globals";
 
 const Sidebar = ({ data, adjustFilters, toggled, setToggled }) => {
-  const { w1: weight1, w2: weight2, w3: weight3, w4: weight4 } = initialWeights;
+  const {
+    w1: weight1,
+    w2: weight2,
+    w3: weight3,
+    w4: weight4,
+    w5: weight5,
+  } = initialWeights;
 
   const [w1, setW1] = useState({ x: weight1 });
   const [w2, setW2] = useState({ x: weight2 });
   const [w3, setW3] = useState({ x: weight3 });
   const [w4, setW4] = useState({ x: weight4 });
+  const [w5, setW5] = useState({ x: weight5 });
   const [error, setError] = useState(false);
 
   const sliderRange = [0, 8];
@@ -18,7 +25,7 @@ const Sidebar = ({ data, adjustFilters, toggled, setToggled }) => {
   const maxValue = Math.max(...data);
 
   const submitHandler = () => {
-    const newWeights = { w1: w1.x, w2: w2.x, w3: w3.x, w4: w4.x };
+    const newWeights = { w1: w1.x, w2: w2.x, w3: w3.x, w4: w4.x, w5: w5.x };
 
     let filter = inputRef.current.value;
     if (filter > maxValue) {
@@ -34,6 +41,7 @@ const Sidebar = ({ data, adjustFilters, toggled, setToggled }) => {
     setW2({ x: weight2 });
     setW3({ x: weight3 });
     setW4({ x: weight4 });
+    setW5({ x: weight5 });
 
     inputRef.current.value = 0;
   };
@@ -87,6 +95,12 @@ const Sidebar = ({ data, adjustFilters, toggled, setToggled }) => {
           range={sliderRange}
           state={w4}
           setState={setW4}
+        />
+        <SliderInput
+          label="Operations and Maintainence"
+          range={sliderRange}
+          state={w5}
+          setState={setW5}
         />
       </div>
       <div>

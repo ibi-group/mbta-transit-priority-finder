@@ -4,7 +4,7 @@ import Sidebar from "./components/Sidebar";
 import segmentData from "./Data/mbta_segments_all_lines.json";
 import { useState, useMemo, useCallback } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
-import { initialWeights } from "./globals";
+import { initialWeights, cols2021, cols2019 } from "./globals";
 //@ts-ignore
 import Explainer from "./components/Explainer.tsx";
 
@@ -18,6 +18,7 @@ interface WeightObject {
   w2: number;
   w3: number;
   w4: number;
+  w5: number;
 }
 
 function App() {
@@ -44,11 +45,8 @@ function App() {
   const recalculateScore = useCallback(
     (weights: WeightObject, filter: number, year: Year) => {
       setLoading(true);
-      const { w1, w2, w3, w4 } = weights;
-      const cols =
-        year === Year.y2021
-          ? ["time_variability", "xpt", "travel_time"]
-          : ["time_variability2019", "xpt2019", "travel_time2019"];
+      const { w1, w2, w3, w4, w5 } = weights;
+      const cols = year === Year.y2021 ? cols2021 : cols2019;
 
       //@ts-ignore
       const newData = segmentData.features
@@ -58,6 +56,7 @@ function App() {
             [cols[0]]: time_variability,
             [cols[1]]: xpt,
             [cols[2]]: travel_time,
+            [cols[3]]: om_score,
             _merge,
           } = d.properties;
 
@@ -65,9 +64,11 @@ function App() {
           const score2 = time_variability * w2;
           const score3 = travel_time * w3;
           const score4 = xpt * w4;
+          const score5 = om_score * w5;
 
           const weightedAvg = Math.round(
-            (score1 + score2 + score3 + score4) / (w1 + w2 + w3 + w4)
+            (score1 + score2 + score3 + score4 + score5) /
+              (w1 + w2 + w3 + w4 + w5)
           );
 
           return {
