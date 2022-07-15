@@ -9,12 +9,15 @@ import xptLink from "../Descriptions/Xpt.md";
 import variabilityLink from "../Descriptions/Variability.md";
 //@ts-ignore
 import travelTimeLink from "../Descriptions/TravelTime.md";
+//@ts-ignore
+import omLink from "../Descriptions/OM.md";
 
 enum Metrics {
   Frequency = "Frequency",
   XPT = "Excess Passenger Time",
   TravelTime = "Travel Time",
   TravelVariability = "Travel Time Variability",
+  omCost = "Operations + Maintenence",
 }
 
 const Explainer = () => {
@@ -26,6 +29,7 @@ const Explainer = () => {
     Metrics.XPT,
     Metrics.TravelTime,
     Metrics.TravelVariability,
+    Metrics.omCost,
   ];
 
   const toggleModal = () => {
@@ -83,6 +87,12 @@ const Explainer = () => {
               name={Metrics.TravelVariability}
               metric={metric}
               path={variabilityLink}
+              collapsed={collapsed}
+            />
+            <TextBlock
+              name={Metrics.omCost}
+              metric={metric}
+              path={omLink}
               collapsed={collapsed}
             />
           </div>
