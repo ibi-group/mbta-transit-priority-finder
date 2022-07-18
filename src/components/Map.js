@@ -18,7 +18,7 @@ import { colors } from "../globals";
 
 //Polyline offset circles issue doc: https://stackoverflow.com/questions/53708398/leaflet-polyline-precision-loss-on-zoom-out
 
-const Map = ({ variable, data }) => {
+const Map = ({ variable, data, showHighFrequency }) => {
   const [zoomLevel, setZoomLevel] = useState(13);
   const showBothSides = zoomLevel >= 16 ? true : false;
   const showStops = zoomLevel >= 15 ? true : false;
@@ -52,6 +52,7 @@ const Map = ({ variable, data }) => {
           scale={colorScale}
           showBothSides={showBothSides}
           setZoomLevel={setZoomLevel}
+          showHighFrequency={showHighFrequency}
         />
         <Pane name="subway-pane" style={{ zIndex: 420 }}>
           {subway && (

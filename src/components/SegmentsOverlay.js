@@ -10,6 +10,7 @@ const SegmentsOverlay = ({
   scale,
   setZoomLevel,
   showBothSides,
+  showHighFrequency,
 }) => {
   //tracks the zoom level
   const map = useMapEvents({
@@ -17,6 +18,24 @@ const SegmentsOverlay = ({
       setZoomLevel(map.getZoom());
     },
   });
+
+  //Set the weight and opacity options for both the polyline and geojson layers
+  function setFeatureOptions(properties) {
+    const newSegment = properties[sharedCols.merge21] === "left_only";
+    const weight = newSegment ? 2 : 4;
+    //prettier-ignore
+    const regex = new RegExp("T{1}\\d+", 'g');
+    const highFreq = regex.test(properties.route_name);
+    const opacity = showHighFrequency
+      ? highFreq
+        ? 1
+        : 0.1
+      : newSegment
+      ? 0.7
+      : 1;
+
+    return [weight, opacity];
+  }
 
   //create a polyline for each segment of the data
   const computePolylines = (featureSet) => {
@@ -26,13 +45,13 @@ const SegmentsOverlay = ({
         return [pair[1], pair[0]];
       });
 
-      const freq = properties[variable];
-      const newSegment = properties[sharedCols.merge21] === "left_only";
+      const score = properties[variable];
+      const [weight, opacity] = setFeatureOptions(properties);
 
       const options = {
-        weight: newSegment ? 2 : 4,
-        opacity: newSegment ? 0.7 : 1,
-        color: scale(freq),
+        weight: weight,
+        opacity: opacity,
+        color: scale(score),
         offset: 10,
         dashArray: properties[sharedCols.side] === "Side1" ? "10, 5" : "",
       };
@@ -70,16 +89,19 @@ const SegmentsOverlay = ({
   };
 
   //only recompute lines if the data has changed
-  const lines = useMemo(() => computePolylines(data), [data]);
+  const lines = useMemo(
+    () => computePolylines(data),
+    [data, showHighFrequency]
+  );
 
   //styling configuration for map elements
-  function styleLines(feature) {
-    const newSegment = feature.properties[sharedCols.merge21] === "left_only";
+  function styleLines({ properties }) {
+    const [weight, opacity] = setFeatureOptions(properties);
 
     return {
-      color: scale(feature.properties[variable]),
-      opacity: newSegment ? 0.7 : 1,
-      weight: newSegment ? 2 : 4,
+      color: scale(properties[variable]),
+      opacity: opacity,
+      weight: weight,
       lineJoin: "round",
     };
   }
@@ -92,7 +114,7 @@ const SegmentsOverlay = ({
       <GeoJSON key={Math.random()} style={styleLines} data={data} />
     );
     return dataToRender;
-  }, [showBothSides, data, lines]);
+  }, [showBothSides, showHighFrequency, data, lines]);
 
   //render method
   return (

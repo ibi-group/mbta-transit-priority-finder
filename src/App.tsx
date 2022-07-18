@@ -25,6 +25,7 @@ function App() {
   const [weights, setWeights] = useState(initialWeights);
   const [filter, setFilter] = useState(1);
   const [year, setYear] = useState(Year.y2021);
+  const [showHighFrequency, setShowHighFrequency] = useState(false);
   const [loading, setLoading] = useState(false);
   const variable: string = "total_score";
 
@@ -105,9 +106,14 @@ function App() {
         adjustFilters={adjustFilters}
         toggled={year}
         setToggled={setYear}
+        highFrequency={showHighFrequency}
+        setShowHighFrequency={setShowHighFrequency}
       />
-      {/*@ts-ignore*/}
-      <Map data={mapData} values={scoreValues} variable={variable} />
+      <Map
+        data={mapData}
+        variable={variable}
+        showHighFrequency={showHighFrequency}
+      />
     </div>
   );
 }

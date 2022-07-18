@@ -4,7 +4,14 @@ import SliderInput from "./Slider";
 import Chart from "./Chart";
 import { initialWeights, colors, grades } from "../globals";
 
-const Sidebar = ({ data, adjustFilters, toggled, setToggled }) => {
+const Sidebar = ({
+  data,
+  adjustFilters,
+  toggled,
+  setToggled,
+  highFrequency,
+  setShowHighFrequency,
+}) => {
   const {
     w1: weight1,
     w2: weight2,
@@ -50,6 +57,10 @@ const Sidebar = ({ data, adjustFilters, toggled, setToggled }) => {
     setToggled((state) => (state === "2021" ? "2019" : "2021"));
   };
 
+  const highFrequencyHandler = () => {
+    setShowHighFrequency((state) => !state);
+  };
+
   return (
     <div className={classes.Sidebar}>
       <h2>MBTA Transit Priority Analysis</h2>
@@ -65,6 +76,14 @@ const Sidebar = ({ data, adjustFilters, toggled, setToggled }) => {
               type="checkbox"
               checked={toggled === "2021" ? true : false}
               onChange={toggleHandler}
+            />
+            <span className={classes.switch} />
+          </label>
+          <label className={classes["toggle-switch"]}>
+            <input
+              type="checkbox"
+              checked={highFrequency}
+              onChange={highFrequencyHandler}
             />
             <span className={classes.switch} />
           </label>
