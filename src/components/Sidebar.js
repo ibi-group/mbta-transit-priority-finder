@@ -63,32 +63,34 @@ const Sidebar = ({
 
   return (
     <div className={classes.Sidebar}>
-      <h2>MBTA Transit Priority Analysis</h2>
       <div className={classes.header}>
+        <h2>MBTA Transit Priority Analysis</h2>
         <p>
           Adjust the sliders to change the weights of each factor. Zoom in to
           view both direction of travel
         </p>
-        <div className={classes["toggle-container"]}>
-          <p>{toggled}</p>
-          <label className={classes["toggle-switch"]}>
-            <input
-              type="checkbox"
-              checked={toggled === "2021" ? true : false}
-              onChange={toggleHandler}
-            />
-            <span className={classes.switch} />
-          </label>
-          <label className={classes["toggle-switch"]}>
-            <input
-              type="checkbox"
-              checked={highFrequency}
-              onChange={highFrequencyHandler}
-            />
-            <span className={classes.switch} />
-          </label>
-        </div>
       </div>
+      <div className={classes["toggle-container"]}>
+        <p>{toggled}</p>
+        <label className={classes["toggle-switch"]}>
+          <input
+            type="checkbox"
+            checked={toggled === "2021" ? true : false}
+            onChange={toggleHandler}
+          />
+          <span className={classes.switch} />
+        </label>
+        <p>High-Frequency Network Only</p>
+        <label className={classes["toggle-switch"]}>
+          <input
+            type="checkbox"
+            checked={highFrequency}
+            onChange={highFrequencyHandler}
+          />
+          <span className={classes.switch} />
+        </label>
+      </div>
+
       <Chart data={data} />
       <div className={classes.sliders}>
         <SliderInput

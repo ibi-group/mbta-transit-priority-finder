@@ -12,8 +12,6 @@
 .header {
   padding: 0px 20px;
   text-align: left;
-  display: flex;
-  gap: 20px;
 }
 
 .buttonset {
@@ -24,6 +22,7 @@
   align-items: top;
   text-align: left;
   gap: 10px;
+  margin-bottom: 20px;
 }
 
 .button {
@@ -112,4 +111,12 @@
 }
 .toggle-switch input[type="checkbox"]:checked + .switch {
   background-color: #1f91ad;
+}
+
+.toggle-container {
+  display: flex;
+  font-size: 12px;
+  gap: 10px;
+  padding-left: 20px;
+  align-items: center;
 }

@@ -44,7 +44,12 @@ function App() {
   }
 
   const recalculateScore = useCallback(
-    (weights: WeightObject, filter: number, year: Year) => {
+    (
+      weights: WeightObject,
+      filter: number,
+      year: Year,
+      highFrequency: boolean
+    ) => {
       setLoading(true);
       const { w1, w2, w3, w4, w5 } = weights;
       const cols = year === Year.y2021 ? cols2021 : cols2019;
@@ -83,7 +88,22 @@ function App() {
         })
         .filter((d: any) => d.properties.total_score >= filter);
 
-      const values = newData.map((d: any) => d.properties.total_score);
+      //filter to just high freq network for chart data if this option is selected
+      let highFreqNetwork;
+      if (highFrequency) {
+        //prettier-ignore
+        const regex = new RegExp("T{1}\\d+", "g");
+        highFreqNetwork = newData.filter((d: any) =>
+          regex.test(d.properties.route_name)
+        );
+        console.log(highFreqNetwork);
+      }
+
+      const chartData = highFrequency ? highFreqNetwork : newData;
+
+      //@ts-ignore
+      const values = chartData.map((d: any) => d.properties.total_score);
+
       setLoading(false);
 
       return [newData, values];
@@ -93,8 +113,8 @@ function App() {
 
   //recalculate score when weights or filter changes
   const [mapData, scoreValues] = useMemo(
-    () => recalculateScore(weights, filter, year),
-    [recalculateScore, weights, filter, year]
+    () => recalculateScore(weights, filter, year, showHighFrequency),
+    [recalculateScore, weights, filter, year, showHighFrequency]
   );
 
   return (
