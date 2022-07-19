@@ -13,3 +13,12 @@ The daily number of vehicles operating on the segment \* distance in miles of th
 ### Cost function
 
 Cost = (vehicle-hours \* $103.53) + (vehicle-miles \* $8.06)
+
+| Score |  Threshold  |
+| :---: | :---------: |
+|   A   |    < 350    |
+|   B   |  351 - 600  |
+|   C   | 601 - 1150  |
+|   D   | 1151 - 1900 |
+|   E   | 1900 - 2650 |
+|   F   |   > 2650    |
