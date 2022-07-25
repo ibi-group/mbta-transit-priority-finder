@@ -11,6 +11,8 @@ const Sidebar = ({
   setToggled,
   highFrequency,
   setShowHighFrequency,
+  showNewRoad,
+  setShowNewRoad,
 }) => {
   const {
     w1: weight1,
@@ -61,6 +63,10 @@ const Sidebar = ({
     setShowHighFrequency((state) => !state);
   };
 
+  const newRoadHandler = () => {
+    setShowNewRoad((state) => !state);
+  };
+
   return (
     <div className={classes.Sidebar}>
       <div className={classes.header}>
@@ -80,12 +86,21 @@ const Sidebar = ({
           />
           <span className={classes.switch} />
         </label>
-        <p>High-Frequency Network Only</p>
+        <p>High-Frequency Network</p>
         <label className={classes["toggle-switch"]}>
           <input
             type="checkbox"
             checked={highFrequency}
             onChange={highFrequencyHandler}
+          />
+          <span className={classes.switch} />
+        </label>
+        <p>New Roadway</p>
+        <label className={classes["toggle-switch"]}>
+          <input
+            type="checkbox"
+            checked={showNewRoad}
+            onChange={newRoadHandler}
           />
           <span className={classes.switch} />
         </label>

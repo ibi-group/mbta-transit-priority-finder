@@ -1,10 +1,10 @@
 import "./App.css";
 import Map from "./components/Map";
 import Sidebar from "./components/Sidebar";
-import segmentData from "./Data/mbta_segments_all_lines.json";
+import segmentData from "./Data/mbta_BNR_segments_all_lines.json";
 import { useState, useMemo, useCallback } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
-import { initialWeights, cols2021, cols2019 } from "./globals";
+import { initialWeights, cols2021, cols2019, sharedCols } from "./globals";
 //@ts-ignore
 import Explainer from "./components/Explainer.tsx";
 
@@ -26,6 +26,7 @@ function App() {
   const [filter, setFilter] = useState(1);
   const [year, setYear] = useState(Year.y2021);
   const [showHighFrequency, setShowHighFrequency] = useState(false);
+  const [showNewRoad, setShowNewRoad] = useState(false);
   const [loading, setLoading] = useState(false);
   const variable: string = "total_score";
 
@@ -48,14 +49,15 @@ function App() {
       weights: WeightObject,
       filter: number,
       year: Year,
-      highFrequency: boolean
+      highFrequency: boolean,
+      newRoad: boolean
     ) => {
       setLoading(true);
       const { w1, w2, w3, w4, w5 } = weights;
       const cols = year === Year.y2021 ? cols2021 : cols2019;
 
       //@ts-ignore
-      const newData = segmentData.features
+      let newData = segmentData.features
         .map((d: any) => {
           const {
             freq_score,
@@ -88,6 +90,13 @@ function App() {
         })
         .filter((d: any) => d.properties.total_score >= filter);
 
+      //filter to just new roadway if this option is selected
+      if (newRoad) {
+        newData = newData.filter(
+          (d: any) => d.properties[sharedCols.new_road] === "new roadway"
+        );
+      }
+
       //filter to just high freq network for chart data if this option is selected
       let highFreqNetwork;
       if (highFrequency) {
@@ -113,8 +122,9 @@ function App() {
 
   //recalculate score when weights or filter changes
   const [mapData, scoreValues] = useMemo(
-    () => recalculateScore(weights, filter, year, showHighFrequency),
-    [recalculateScore, weights, filter, year, showHighFrequency]
+    () =>
+      recalculateScore(weights, filter, year, showHighFrequency, showNewRoad),
+    [recalculateScore, weights, filter, year, showHighFrequency, showNewRoad]
   );
 
   return (
@@ -128,6 +138,8 @@ function App() {
         setToggled={setYear}
         highFrequency={showHighFrequency}
         setShowHighFrequency={setShowHighFrequency}
+        showNewRoad={showNewRoad}
+        setShowNewRoad={setShowNewRoad}
       />
       <Map
         data={mapData}

@@ -13,6 +13,7 @@ export const sharedCols = {
   all_day_vol: "frequency",
   side: "side",
   max_freq: "max_freq",
+  new_road: "new_road",
 };
 
 export const cols2021 = [

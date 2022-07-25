@@ -117,6 +117,7 @@
   display: flex;
   font-size: 12px;
   gap: 10px;
-  padding-left: 20px;
+  padding: 0px 20px;
   align-items: center;
+  text-align: right;
 }
