@@ -17,15 +17,15 @@ export const sharedCols = {
 };
 
 export const cols2021 = [
-  "time_variability",
+  "time_variability21",
   "xpt21",
-  "travel_time",
+  "travel_time21",
   "OM_score21",
 ];
 
 export const cols2019 = [
-  "time_variability2019",
+  "time_variability19",
   "xpt19",
-  "travel_time2019",
+  "travel_time19",
   "OM_score19",
 ];

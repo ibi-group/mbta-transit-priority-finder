@@ -10,7 +10,8 @@ import React from "react";
 
 const Chart = ({ data }) => {
   const counts = {};
-  const validData = data.filter((d) => d !== null);
+  const validData = data.filter((d) => d !== null && d !== 0);
+  const nullCount = data.filter((d) => d === 0).length;
 
   for (const num of validData) {
     counts[num] = counts[num] ? (counts[num] += 1) : 1;
