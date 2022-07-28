@@ -14,17 +14,6 @@
   text-align: left;
 }
 
-.buttonset {
-  display: flex;
-  flex-direction: row;
-  padding-left: 20px;
-  padding-right: 20px;
-  align-items: top;
-  text-align: left;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
 .button {
   background-color: var(--main-blue);
   color: #fff;
@@ -120,4 +109,11 @@
   padding: 0px 20px;
   align-items: center;
   text-align: right;
+}
+
+.sliders {
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+  align-items: flex-start;
 }

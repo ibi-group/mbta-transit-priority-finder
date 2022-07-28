@@ -5,9 +5,7 @@ import { sharedCols } from "../globals";
 
 //Child component that listens for changes in zoom and sets state
 const SegmentsOverlay = ({
-  variable,
   data,
-  scale,
   setZoomLevel,
   showBothSides,
   showHighFrequency,
@@ -45,13 +43,12 @@ const SegmentsOverlay = ({
         return [pair[1], pair[0]];
       });
 
-      const score = properties[variable];
       const [weight, opacity] = setFeatureOptions(properties);
 
       const options = {
         weight: weight,
         opacity: opacity,
-        color: scale(score),
+        color: "steelblue",
         offset: 10,
         dashArray: properties[sharedCols.side] === "Side1" ? "10, 5" : "",
       };
@@ -99,7 +96,7 @@ const SegmentsOverlay = ({
     const [weight, opacity] = setFeatureOptions(properties);
 
     return {
-      color: scale(properties[variable]),
+      color: "steelblue",
       opacity: opacity,
       weight: weight,
       lineJoin: "round",

@@ -8,7 +8,6 @@ import {
 import classes from "./Map.module.css";
 import "leaflet/dist/leaflet.css";
 import "leaflet-polylineoffset";
-import { scale } from "chroma-js";
 import Legend from "./Legend";
 import useRailRoutes from "./useRailRoutes";
 import SegmentsOverlay from "./SegmentsOverlay";
@@ -18,14 +17,11 @@ import { colors } from "../globals";
 
 //Polyline offset circles issue doc: https://stackoverflow.com/questions/53708398/leaflet-polyline-precision-loss-on-zoom-out
 
-const Map = ({ variable, data, showHighFrequency }) => {
+const Map = ({ data, showHighFrequency, showNewRoad }) => {
   const [zoomLevel, setZoomLevel] = useState(13);
   const showBothSides = zoomLevel >= 16 ? true : false;
   const showStops = zoomLevel >= 15 ? true : false;
   const mapCenter = [42.3601, -71.0589];
-
-  //Create color scale
-  const colorScale = scale(colors).domain([1, 6]);
 
   //custom hook for getting data from the TransitLand API for the chosen mode
   const subway = useRailRoutes(1);
@@ -47,9 +43,7 @@ const Map = ({ variable, data, showHighFrequency }) => {
           {showStops && <StopsOverlay />}
         </Pane>
         <SegmentsOverlay
-          variable={variable}
           data={data}
-          scale={colorScale}
           showBothSides={showBothSides}
           setZoomLevel={setZoomLevel}
           showHighFrequency={showHighFrequency}
