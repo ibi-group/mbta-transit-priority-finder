@@ -13,15 +13,27 @@ import useRailRoutes from "./useRailRoutes";
 import SegmentsOverlay from "./SegmentsOverlay";
 import StopsOverlay from "./StopsOverlay";
 import { useState } from "react";
-import { colors } from "../globals";
+import { colors, sharedCols } from "../globals";
 
 //Polyline offset circles issue doc: https://stackoverflow.com/questions/53708398/leaflet-polyline-precision-loss-on-zoom-out
 
-const Map = ({ data, showHighFrequency, showNewRoad }) => {
+const Map = ({ data, maybeSegments, showHighFrequency, showNewRoad }) => {
   const [zoomLevel, setZoomLevel] = useState(13);
   const showBothSides = zoomLevel >= 16 ? true : false;
   const showStops = zoomLevel >= 15 ? true : false;
   const mapCenter = [42.3601, -71.0589];
+
+  //filter to new roadway segments if this options is selected
+  function filterData(dataSet, show) {
+    return show
+      ? dataSet.filter(
+          (d) => d.properties[sharedCols.new_road] === "new roadway"
+        )
+      : dataSet;
+  }
+
+  const includedLayerData = filterData(data, showNewRoad);
+  const maybeLayerData = filterData(maybeSegments, showNewRoad);
 
   //custom hook for getting data from the TransitLand API for the chosen mode
   const subway = useRailRoutes(1);
@@ -42,12 +54,22 @@ const Map = ({ data, showHighFrequency, showNewRoad }) => {
         <Pane name="stops-overlay" style={{ zIndex: 499 }}>
           {showStops && <StopsOverlay />}
         </Pane>
-        <SegmentsOverlay
-          data={data}
-          showBothSides={showBothSides}
-          setZoomLevel={setZoomLevel}
-          showHighFrequency={showHighFrequency}
-        />
+        <Pane name="segments" style={{ zIndex: 450 }}>
+          <SegmentsOverlay
+            data={includedLayerData}
+            color="blue"
+            showBothSides={showBothSides}
+            setZoomLevel={setZoomLevel}
+            showHighFrequency={showHighFrequency}
+          />
+          <SegmentsOverlay
+            data={maybeLayerData}
+            color="orange"
+            showBothSides={showBothSides}
+            setZoomLevel={setZoomLevel}
+            showHighFrequency={showHighFrequency}
+          />
+        </Pane>
         <Pane name="subway-pane" style={{ zIndex: 420 }}>
           {subway && (
             <GeoJSON key={Math.random()} style={styleRail} data={subway} />
