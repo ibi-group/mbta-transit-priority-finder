@@ -4,14 +4,8 @@ import { useState } from "react";
 
 const Legend = (props) => {
   const [collapsed, setCollapsed] = useState(true);
-  const descriptions = [
-    "Very Low",
-    "Low",
-    "Medium-Low",
-    "Medium-High",
-    "High",
-    "Very High",
-  ];
+
+  const descriptions = ["Included", "Possible"];
 
   return (
     <div className={classes.container}>
@@ -64,17 +58,17 @@ const Legend = (props) => {
         </div>
       )}
       <div>
-        {props.colors.map((color, index) => {
+        {descriptions.map((label, index) => {
           return (
             <div className={classes["square-container"]}>
               <div
                 className={classes.square}
-                key={color}
-                style={{ backgroundColor: color }}
+                key={1}
+                style={{ backgroundColor: props.colors[index] }}
               >
-                <p className={classes.label}>{grades[index]}</p>
+                <p>{label}</p>
               </div>
-              {!collapsed && <p>{descriptions[index]} Priority</p>}
+              {!collapsed && <p>{label} Segments</p>}
             </div>
           );
         })}

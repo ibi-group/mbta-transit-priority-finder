@@ -1,6 +1,7 @@
 import classes from "./Sidebar.module.css";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import MultiRangeSlider from "./MultiRangeSlider";
+import { initialWeights } from "../globals";
 
 const Sidebar = ({
   highFrequency,
@@ -9,9 +10,10 @@ const Sidebar = ({
   setShowNewRoad,
   recalculateScore,
 }) => {
-  const [frequencyBounds, setFrequencyBounds] = useState([1, 6]);
-  const [socialBounds, setSocialBounds] = useState([1, 6]);
-  const [travelBounds, setTravelBounds] = useState([1, 6]);
+  const { freq, sb, travel } = initialWeights;
+  const [frequencyBounds, setFrequencyBounds] = useState(freq);
+  const [socialBounds, setSocialBounds] = useState(sb);
+  const [travelBounds, setTravelBounds] = useState(travel);
 
   const highFrequencyHandler = () => {
     setShowHighFrequency((state) => !state);

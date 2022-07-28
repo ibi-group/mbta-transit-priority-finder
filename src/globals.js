@@ -2,7 +2,11 @@ import { scale } from "chroma-js";
 
 export const grades = ["A", "B", "C", "D", "E", "F"];
 
-export const initialWeights = { w1: 1, w2: 1, w3: 1, w4: 1, w5: 0 };
+export const initialWeights = {
+  freq: [1, 6],
+  sb: [1, 6],
+  travel: [1, 6],
+};
 
 export const colors = scale(["#1F91AD", "#FFB35C"]).colors(6);
 
@@ -14,18 +18,7 @@ export const sharedCols = {
   side: "side",
   max_freq: "max_freq",
   new_road: "new_road",
+  xpt: "xpt19",
+  travel_time: "travel_time19",
+  social_cost: "OM_score19",
 };
-
-export const cols2021 = [
-  "time_variability21",
-  "xpt21",
-  "travel_time21",
-  "OM_score21",
-];
-
-export const cols2019 = [
-  "time_variability19",
-  "xpt19",
-  "travel_time19",
-  "OM_score19",
-];

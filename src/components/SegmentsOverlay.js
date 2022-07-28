@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import { useMapEvents, Popup, Polyline, GeoJSON, Pane } from "react-leaflet";
+import { useCallback, useMemo } from "react";
+import { useMapEvents, Popup, Polyline, GeoJSON } from "react-leaflet";
 import classes from "./Map.module.css";
 import { sharedCols } from "../globals";
 
@@ -37,82 +37,81 @@ const SegmentsOverlay = ({
   }
 
   //create a polyline for each segment of the data
-  const computePolylines = (featureSet) => {
-    const lines = featureSet.map(({ geometry, properties }) => {
-      //reverse coords for polyline
-      const coordList = geometry.coordinates.map((pair) => {
-        return [pair[1], pair[0]];
+  const computePolylines = useCallback(
+    (featureSet) => {
+      const lines = featureSet.map(({ geometry, properties }) => {
+        //reverse coords for polyline
+        const coordList = geometry.coordinates.map((pair) => {
+          return [pair[1], pair[0]];
+        });
+
+        const [weight, opacity] = setFeatureOptions(properties);
+
+        const options = {
+          weight: weight,
+          opacity: opacity,
+          color: color,
+          offset: 10,
+          dashArray: properties[sharedCols.side] === "Side1" ? "10, 5" : "",
+        };
+
+        return (
+          <Polyline
+            className={classes.busline}
+            key={Math.random()}
+            positions={coordList}
+            pathOptions={options}
+            eventHandlers={{
+              mouseover: (e) => e.target.setStyle({ weight: 8 }),
+              mouseout: (e) => e.target.setStyle({ weight: 3 }),
+            }}
+          >
+            <Popup pane="segment-tooltip">
+              <strong>Start Stop:</strong> {properties.s_st_name}
+              <br />
+              <strong>End Stop:</strong> {properties.e_st_name}
+              <br />
+              <strong>Routes:</strong> {properties.route_name}
+              <br />
+              <strong>All-Day Volume:</strong>{" "}
+              {properties[sharedCols.all_day_vol]}
+              <br />
+              <strong>Max Frequency:</strong> {properties[sharedCols.max_freq]}
+              <br />
+              <strong>Score</strong> {properties.total_score}
+            </Popup>
+          </Polyline>
+        );
       });
 
-      const [weight, opacity] = setFeatureOptions(properties);
-
-      const options = {
-        weight: weight,
-        opacity: opacity,
-        color: color,
-        offset: 10,
-        dashArray: properties[sharedCols.side] === "Side1" ? "10, 5" : "",
-      };
-
-      return (
-        <Polyline
-          className={classes.busline}
-          key={Math.random()}
-          positions={coordList}
-          pathOptions={options}
-          eventHandlers={{
-            mouseover: (e) => e.target.setStyle({ weight: 8 }),
-            mouseout: (e) => e.target.setStyle({ weight: 3 }),
-          }}
-        >
-          <Popup pane="segment-tooltip">
-            <strong>Start Stop:</strong> {properties.s_st_name}
-            <br />
-            <strong>End Stop:</strong> {properties.e_st_name}
-            <br />
-            <strong>Routes:</strong> {properties.route_name}
-            <br />
-            <strong>All-Day Volume:</strong>{" "}
-            {properties[sharedCols.all_day_vol]}
-            <br />
-            <strong>Max Frequency:</strong> {properties[sharedCols.max_freq]}
-            <br />
-            <strong>Score</strong> {properties.total_score}
-          </Popup>
-        </Polyline>
-      );
-    });
-
-    return lines;
-  };
-
-  //only recompute lines if the data has changed
-  const lines = useMemo(
-    () => computePolylines(data),
-    [data, showHighFrequency]
+      return lines;
+    },
+    [color]
   );
-
-  //styling configuration for map elements
-  function styleLines({ properties }) {
-    const [weight, opacity] = setFeatureOptions(properties);
-
-    return {
-      color: color,
-      opacity: opacity,
-      weight: weight,
-      lineJoin: "round",
-    };
-  }
 
   //only re-render lines if the data changes via user selection or the zoom level hits the threshold
   const renderedLayer = useMemo(() => {
+    //styling configuration for map elements
+    function styleLines({ properties }) {
+      const [weight, opacity] = setFeatureOptions(properties);
+
+      return {
+        color: color,
+        opacity: opacity,
+        weight: weight,
+        lineJoin: "round",
+      };
+    }
+    //only recompute lines if the data has changed
+    const lines = computePolylines(data);
+
     const dataToRender = showBothSides ? (
       lines
     ) : (
       <GeoJSON key={Math.random()} style={styleLines} data={data} />
     );
     return dataToRender;
-  }, [showBothSides, showHighFrequency, data, lines]);
+  }, [showBothSides, showHighFrequency, data, computePolylines]);
 
   //render method
   return <>{renderedLayer}</>;

@@ -2,15 +2,15 @@ import "./App.css";
 import Map from "./components/Map";
 import Sidebar from "./components/Sidebar";
 import segmentData from "./Data/mbta_BNR_segments_all_lines.json";
-import { useState } from "react";
-import { cols2019, sharedCols } from "./globals";
+import { useEffect, useState } from "react";
+import { sharedCols, initialWeights } from "./globals";
 //@ts-ignore
 import Explainer from "./components/Explainer.tsx";
 
 function App() {
   //@ts-ignore
-  const [data, setData] = useState(segmentData.features);
-  const [maybes, setMaybes] = useState(segmentData.features);
+  const [data, setData] = useState(null);
+  const [maybes, setMaybes] = useState(null);
   const [showHighFrequency, setShowHighFrequency] = useState(false);
   const [showNewRoad, setShowNewRoad] = useState(false);
 
@@ -28,9 +28,9 @@ function App() {
       //@ts-ignore
       const freq = properties[sharedCols.freq_score];
       //@ts-ignore
-      const sb = properties[cols2019[3]];
+      const sb = properties[sharedCols.social_cost];
       //@ts-ignore
-      const tt = properties[cols2019[2]];
+      const tt = properties[sharedCols.travel_time];
 
       return (
         (freq >= upperFreq && sb > lowerSocial && tt > lowerTravel) ||
@@ -44,9 +44,9 @@ function App() {
       //@ts-ignore
       const freq = properties[sharedCols.freq_score];
       //@ts-ignore
-      const sb = properties[cols2019[3]];
+      const sb = properties[sharedCols.social_cost];
       //@ts-ignore
-      const tt = properties[cols2019[2]];
+      const tt = properties[sharedCols.travel_time];
 
       return (
         (freq > lowerFreq && freq < upperFreq) ||
@@ -58,6 +58,11 @@ function App() {
     setData(included);
     setMaybes(questionable);
   };
+
+  useEffect(() => {
+    const { freq, sb, travel } = initialWeights;
+    recalculateScore(freq, sb, travel);
+  }, []);
 
   return (
     <div className="App">

@@ -46,10 +46,8 @@
 
 /* For Chrome browsers */
 .thumb::-webkit-slider-thumb {
-  background-color: #f1f5f7;
   border: none;
   border-radius: 50%;
-  box-shadow: 0 0 1px 1px #ced4da;
   cursor: pointer;
   height: 18px;
   width: 18px;
@@ -58,9 +56,28 @@
   position: relative;
 }
 
+.thumb-low::-webkit-slider-thumb {
+  background-color: #ffb35c;
+  box-shadow: 0 0 10px 1px #ffb35c;
+}
+
+.thumb-high::-moz-range-thumb {
+  background-color: #1f91ad;
+  box-shadow: 0 0 10px 1px #1f91ad;
+}
+
+.thumb-low::-moz-range-thumb {
+  background-color: #ffb35c;
+  box-shadow: 0 0 10px 1px #ffb35c;
+}
+
+.thumb-high::-webkit-slider-thumb {
+  background-color: #1f91ad;
+  box-shadow: 0 0 10px 1px #1f91ad;
+}
+
 /* For Firefox browsers */
 .thumb::-moz-range-thumb {
-  background-color: #f1f5f7;
   border: none;
   border-radius: 50%;
   box-shadow: 0 0 1px 1px #ced4da;
@@ -80,5 +97,4 @@
   align-items: center;
   text-align: left;
   gap: 10px;
-  margin-bottom: 20px;
 }

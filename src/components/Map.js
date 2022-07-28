@@ -22,6 +22,7 @@ const Map = ({ data, maybeSegments, showHighFrequency, showNewRoad }) => {
   const showBothSides = zoomLevel >= 16 ? true : false;
   const showStops = zoomLevel >= 15 ? true : false;
   const mapCenter = [42.3601, -71.0589];
+  const mapColors = [colors[0], "#71797E"];
 
   //filter to new roadway segments if this options is selected
   function filterData(dataSet, show) {
@@ -54,17 +55,19 @@ const Map = ({ data, maybeSegments, showHighFrequency, showNewRoad }) => {
         <Pane name="stops-overlay" style={{ zIndex: 499 }}>
           {showStops && <StopsOverlay />}
         </Pane>
-        <Pane name="segments" style={{ zIndex: 450 }}>
+        <Pane name="included-segments" style={{ zIndex: 450 }}>
           <SegmentsOverlay
             data={includedLayerData}
-            color="blue"
+            color={mapColors[0]}
             showBothSides={showBothSides}
             setZoomLevel={setZoomLevel}
             showHighFrequency={showHighFrequency}
           />
+        </Pane>
+        <Pane name="maybe-segments" style={{ zIndex: 430 }}>
           <SegmentsOverlay
             data={maybeLayerData}
-            color="orange"
+            color={mapColors[1]}
             showBothSides={showBothSides}
             setZoomLevel={setZoomLevel}
             showHighFrequency={showHighFrequency}
@@ -97,7 +100,7 @@ const Map = ({ data, maybeSegments, showHighFrequency, showNewRoad }) => {
           </LayersControl.BaseLayer>
         </LayersControl>
       </MapContainer>
-      <Legend colors={colors} />
+      <Legend colors={mapColors} />
     </div>
   );
 };

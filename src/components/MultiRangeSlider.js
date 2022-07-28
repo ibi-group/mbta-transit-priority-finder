@@ -1,4 +1,5 @@
 import "./MultiRangeSlider.css";
+import { colors } from "../globals";
 
 const MultiRangeSlider = ({ bounds, name, setState }) => {
   const [min, max] = bounds;
@@ -22,7 +23,7 @@ const MultiRangeSlider = ({ bounds, name, setState }) => {
         step="1"
         value={min}
         onChange={handleMinChange}
-        className="thumb thumb--zindex-3"
+        className="thumb thumb--zindex-3 thumb-low"
       />
       <input
         type="range"
@@ -31,16 +32,18 @@ const MultiRangeSlider = ({ bounds, name, setState }) => {
         step="1"
         value={max}
         onChange={handleMaxChange}
-        className="thumb thumb--zindex-4"
+        className="thumb thumb--zindex-4 thumb-high"
       />
 
       <div className="slider">
         <div className="slider__track" />
         <div className="slider__range" />
       </div>
-      <p>
-        {name} of {min} to {max}
-      </p>
+      <div>
+        <p style={{ fontSize: "14px" }}>{name}</p>
+        <p style={{ fontSize: "12px", color: colors[5] }}>Lower: {min}</p>
+        <p style={{ fontSize: "12px", color: colors[0] }}>Upper: {max}</p>
+      </div>
     </div>
   );
 };
