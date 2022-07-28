@@ -20,5 +20,6 @@ export const sharedCols = {
   new_road: "new_road",
   xpt: "xpt19",
   travel_time: "travel_time19",
-  social_cost: "OM_score19",
+  social_cost: "OM19",
+  social_cost_score: "OM_score19",
 };

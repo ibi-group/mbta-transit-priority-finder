@@ -18,7 +18,7 @@ const MultiRangeSlider = ({ bounds, name, setState }) => {
     <div className="slider-container">
       <input
         type="range"
-        min="1"
+        min="0"
         max="6"
         step="1"
         value={min}
@@ -27,7 +27,7 @@ const MultiRangeSlider = ({ bounds, name, setState }) => {
       />
       <input
         type="range"
-        min="1"
+        min="0"
         max="6"
         step="1"
         value={max}

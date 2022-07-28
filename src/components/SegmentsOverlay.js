@@ -78,7 +78,7 @@ const SegmentsOverlay = ({
               <br />
               <strong>Max Frequency:</strong> {properties[sharedCols.max_freq]}
               <br />
-              <strong>Score</strong> {properties.total_score}
+              <strong>Social Cost</strong> {properties[sharedCols.social_cost]}
             </Popup>
           </Polyline>
         );

@@ -28,7 +28,7 @@ function App() {
       //@ts-ignore
       const freq = properties[sharedCols.freq_score];
       //@ts-ignore
-      const sb = properties[sharedCols.social_cost];
+      const sb = properties[sharedCols.social_cost_score];
       //@ts-ignore
       const tt = properties[sharedCols.travel_time];
 
@@ -44,7 +44,7 @@ function App() {
       //@ts-ignore
       const freq = properties[sharedCols.freq_score];
       //@ts-ignore
-      const sb = properties[sharedCols.social_cost];
+      const sb = properties[sharedCols.social_cost_score];
       //@ts-ignore
       const tt = properties[sharedCols.travel_time];
 
