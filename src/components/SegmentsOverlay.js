@@ -20,7 +20,7 @@ const SegmentsOverlay = ({
 
   //Set the weight and opacity options for both the polyline and geojson layers
   function setFeatureOptions(properties) {
-    const newSegment = properties[sharedCols.merge21] === "left_only";
+    const newSegment = properties[sharedCols.merge] === "left_only";
     const weight = newSegment ? 2 : 4;
     //prettier-ignore
     const regex = new RegExp("T{1}\\d+", 'g');
