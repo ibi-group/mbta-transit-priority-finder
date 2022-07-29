@@ -70,7 +70,7 @@ const Sidebar = ({
           setState={setSocialBounds}
         />
         <MultiRangeSlider
-          name="Travel Time"
+          name="Passenger Experience"
           bounds={travelBounds}
           setState={setTravelBounds}
         />

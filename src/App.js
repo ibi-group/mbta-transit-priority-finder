@@ -30,7 +30,7 @@ function App() {
       //@ts-ignore
       const sb = properties[sharedCols.social_cost_score];
       //@ts-ignore
-      const tt = properties[sharedCols.travel_time];
+      const tt = properties[sharedCols.pass_exp_score];
 
       return (
         (freq >= upperFreq && sb > lowerSocial && tt > lowerTravel) ||
@@ -46,7 +46,7 @@ function App() {
       //@ts-ignore
       const sb = properties[sharedCols.social_cost_score];
       //@ts-ignore
-      const tt = properties[sharedCols.travel_time];
+      const tt = properties[sharedCols.pass_exp_score];
 
       return (
         (freq > lowerFreq && freq < upperFreq) ||

@@ -1,9 +1,9 @@
 import { scale } from "chroma-js";
 
 export const initialWeights = {
-  freq: [1, 6],
-  sb: [1, 6],
-  travel: [1, 6],
+  freq: [2, 4],
+  sb: [0, 4],
+  travel: [0, 4],
 };
 
 export const colors = scale(["#1F91AD", "#FFB35C"]).colors(6);
@@ -17,6 +17,8 @@ export const sharedCols = {
   new_road: "new_road",
   xpt: "xpt19",
   travel_time: "travel_time19",
+  travel_time_var: "time_variability19",
   social_cost: "social_benefit_per_mile",
   social_cost_score: "social_score",
+  pass_exp_score: "pass_exp_score",
 };

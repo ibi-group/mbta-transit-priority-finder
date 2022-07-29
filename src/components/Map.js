@@ -14,6 +14,7 @@ import SegmentsOverlay from "./SegmentsOverlay";
 import StopsOverlay from "./StopsOverlay";
 import { useState } from "react";
 import { colors, sharedCols } from "../globals";
+import chroma from "chroma-js";
 
 //Polyline offset circles issue doc: https://stackoverflow.com/questions/53708398/leaflet-polyline-precision-loss-on-zoom-out
 
@@ -22,7 +23,7 @@ const Map = ({ data, maybeSegments, showHighFrequency, showNewRoad }) => {
   const showBothSides = zoomLevel >= 16 ? true : false;
   const showStops = zoomLevel >= 15 ? true : false;
   const mapCenter = [42.3601, -71.0589];
-  const mapColors = [colors[0], "#71797E"];
+  const mapColors = [chroma(colors[0]).brighten(2).saturate(1.3), "#71797E"];
 
   //filter to new roadway segments if this options is selected
   function filterData(dataSet, show) {
