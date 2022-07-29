@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { useMapEvents, Popup, Polyline, GeoJSON } from "react-leaflet";
 import classes from "./Map.module.css";
 import { sharedCols } from "../globals";
@@ -18,27 +18,28 @@ const SegmentsOverlay = ({
     },
   });
 
-  //Set the weight and opacity options for both the polyline and geojson layers
-  function setFeatureOptions(properties) {
-    const newSegment = properties[sharedCols.merge] === "left_only";
-    const weight = newSegment ? 2 : 4;
-    //prettier-ignore
-    const regex = new RegExp("T{1}\\d+", 'g');
-    const highFreq = regex.test(properties.route_name);
-    const opacity = showHighFrequency
-      ? highFreq
-        ? 1
-        : 0.1
-      : newSegment
-      ? 0.7
-      : 1;
+  //only re-render lines if the data changes via user selection or the zoom level hits the threshold
+  const renderedLayer = useMemo(() => {
+    //Set the weight and opacity options for both the polyline and geojson layers
+    function setFeatureOptions(properties) {
+      const newSegment = properties[sharedCols.merge] === "left_only";
+      const weight = newSegment ? 2 : 4;
+      //prettier-ignore
+      const regex = new RegExp("T{1}\\d+", 'g');
+      const highFreq = regex.test(properties.route_name);
+      const opacity = showHighFrequency
+        ? highFreq
+          ? 1
+          : 0.1
+        : newSegment
+        ? 0.7
+        : 1;
 
-    return [weight, opacity];
-  }
+      return [weight, opacity];
+    }
 
-  //create a polyline for each segment of the data
-  const computePolylines = useCallback(
-    (featureSet) => {
+    //create a polyline for each segment of the data
+    const computePolylines = (featureSet) => {
       const lines = featureSet.map(({ geometry, properties }) => {
         //reverse coords for polyline
         const coordList = geometry.coordinates.map((pair) => {
@@ -85,12 +86,7 @@ const SegmentsOverlay = ({
       });
 
       return lines;
-    },
-    [color]
-  );
-
-  //only re-render lines if the data changes via user selection or the zoom level hits the threshold
-  const renderedLayer = useMemo(() => {
+    };
     //styling configuration for map elements
     function styleLines({ properties }) {
       const [weight, opacity] = setFeatureOptions(properties);
@@ -111,7 +107,7 @@ const SegmentsOverlay = ({
       <GeoJSON key={Math.random()} style={styleLines} data={data} />
     );
     return dataToRender;
-  }, [showBothSides, showHighFrequency, data, computePolylines]);
+  }, [showBothSides, showHighFrequency, data, color]);
 
   //render method
   return <>{renderedLayer}</>;
