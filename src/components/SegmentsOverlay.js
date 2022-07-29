@@ -40,6 +40,7 @@ const SegmentsOverlay = ({
 
     //create a polyline for each segment of the data
     const computePolylines = (featureSet) => {
+      console.log("computing polylines");
       const lines = featureSet.map(({ geometry, properties }) => {
         //reverse coords for polyline
         const coordList = geometry.coordinates.map((pair) => {
@@ -99,15 +100,13 @@ const SegmentsOverlay = ({
       };
     }
     //only recompute lines if the data has changed
-    const lines = computePolylines(data);
-
     const dataToRender = showBothSides ? (
-      lines
+      computePolylines(data)
     ) : (
       <GeoJSON key={Math.random()} style={styleLines} data={data} />
     );
     return dataToRender;
-  }, [showBothSides, showHighFrequency, data, color]);
+  }, [showBothSides, showHighFrequency, data]);
 
   //render method
   return <>{renderedLayer}</>;
