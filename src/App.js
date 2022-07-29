@@ -49,9 +49,12 @@ function App() {
       const tt = properties[sharedCols.pass_exp_score];
 
       return (
-        (freq > lowerFreq && freq < upperFreq) ||
-        (sb > lowerSocial && sb < upperSocial) ||
-        (tt > lowerTravel && tt < upperTravel)
+        freq > lowerFreq &&
+        freq < upperFreq &&
+        sb > lowerSocial &&
+        sb < upperSocial &&
+        tt > lowerTravel &&
+        tt < upperTravel
       );
     });
 
