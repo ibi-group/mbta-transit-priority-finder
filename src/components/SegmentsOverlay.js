@@ -84,12 +84,15 @@ const SegmentsOverlay = ({
               <br />
               <strong>Routes:</strong> {properties.route_name}
               <br />
-              <strong>All-Day Volume:</strong>{" "}
+              <strong>All-Day Bus Volume:</strong>{" "}
               {properties[sharedCols.all_day_vol]}
               <br />
-              <strong>Max Frequency:</strong> {properties[sharedCols.max_freq]}
+              <strong>Maximum 1-hour Bus Volume:</strong>{" "}
+              {properties[sharedCols.max_freq]}
               <br />
               <strong>Social Cost</strong> {properties[sharedCols.social_cost]}
+              <br />
+              <strong>Travel Time</strong> {properties[sharedCols.travel_time]}
             </Popup>
           </Polyline>
         );
