@@ -35,7 +35,16 @@ const SegmentsOverlay = ({
         ? 0.7
         : 1;
 
-      return [weight, opacity];
+      const segmentColor =
+        color.length > 1
+          ? properties.score === 3
+            ? color[0]
+            : properties.score === 2
+            ? color[1]
+            : color[2]
+          : color[0];
+
+      return [weight, opacity, segmentColor];
     }
 
     //create a polyline for each segment of the data
@@ -47,7 +56,7 @@ const SegmentsOverlay = ({
           return [pair[1], pair[0]];
         });
 
-        const [weight, opacity] = setFeatureOptions(properties);
+        const [weight, opacity, color] = setFeatureOptions(properties);
 
         const options = {
           weight: weight,
@@ -90,7 +99,7 @@ const SegmentsOverlay = ({
     };
     //styling configuration for map elements
     function styleLines({ properties }) {
-      const [weight, opacity] = setFeatureOptions(properties);
+      const [weight, opacity, color] = setFeatureOptions(properties);
 
       return {
         color: color,

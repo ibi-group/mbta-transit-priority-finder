@@ -1,5 +1,5 @@
 import "./MultiRangeSlider.css";
-import { colors } from "../globals";
+import { mapColors } from "../globals";
 
 const MultiRangeSlider = ({ bounds, name, setState }) => {
   const [min, max] = bounds;
@@ -19,7 +19,7 @@ const MultiRangeSlider = ({ bounds, name, setState }) => {
       <input
         type="range"
         min="0"
-        max="6"
+        max="7"
         step="1"
         value={min}
         onChange={handleMinChange}
@@ -28,7 +28,7 @@ const MultiRangeSlider = ({ bounds, name, setState }) => {
       <input
         type="range"
         min="0"
-        max="6"
+        max="7"
         step="1"
         value={max}
         onChange={handleMaxChange}
@@ -41,8 +41,8 @@ const MultiRangeSlider = ({ bounds, name, setState }) => {
       </div>
       <div>
         <p style={{ fontSize: "14px" }}>{name}</p>
-        <p style={{ fontSize: "12px", color: colors[5] }}>Lower: {min}</p>
-        <p style={{ fontSize: "12px", color: colors[0] }}>Upper: {max}</p>
+        <p style={{ fontSize: "12px", color: "#ffb35c" }}>Lower: {min}</p>
+        <p style={{ fontSize: "12px", color: mapColors[2] }}>Upper: {max}</p>
       </div>
     </div>
   );

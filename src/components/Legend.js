@@ -1,11 +1,10 @@
 import classes from "./Legend.module.css";
-import { grades } from "../globals";
 import { useState } from "react";
 
 const Legend = (props) => {
   const [collapsed, setCollapsed] = useState(true);
 
-  const descriptions = ["Included", "Possible"];
+  const descriptions = ["3 Criteria", "2 Criteria", "1 Criteria", "Possible"];
 
   return (
     <div className={classes.container}>

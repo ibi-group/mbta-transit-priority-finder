@@ -1,12 +1,17 @@
-import { scale } from "chroma-js";
+import chroma from "chroma-js";
 
 export const initialWeights = {
-  freq: [2, 4],
-  sb: [0, 4],
-  travel: [0, 4],
+  freq: [2, 5],
+  sb: [2, 5],
+  travel: [2, 6],
 };
 
-export const colors = scale(["#1F91AD", "#FFB35C"]).colors(6);
+export const mapColors = [
+  "#D1F0B1",
+  chroma("#1F91AD").brighten(2),
+  "#1F91AD",
+  "#71797E",
+];
 
 export const sharedCols = {
   merge: "merge2019",

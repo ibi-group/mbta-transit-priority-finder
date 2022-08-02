@@ -60,7 +60,7 @@ const Sidebar = ({
 
       <div className={classes.sliders}>
         <MultiRangeSlider
-          name="Frequency"
+          name="Service Offering"
           bounds={frequencyBounds}
           setState={setFrequencyBounds}
         />
