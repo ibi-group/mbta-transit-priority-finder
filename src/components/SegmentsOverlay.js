@@ -97,7 +97,6 @@ const SegmentsOverlay = ({
           </Polyline>
         );
       });
-
       return lines;
     };
     //styling configuration for map elements

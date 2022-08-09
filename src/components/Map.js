@@ -4,6 +4,7 @@ import {
   GeoJSON,
   Pane,
   LayersControl,
+  LayerGroup,
 } from "react-leaflet";
 import classes from "./Map.module.css";
 import "leaflet/dist/leaflet.css";
@@ -14,6 +15,7 @@ import SegmentsOverlay from "./SegmentsOverlay";
 import StopsOverlay from "./StopsOverlay";
 import { useState } from "react";
 import { mapColors, sharedCols } from "../globals";
+import IBIcorridors from "../Data/corridors_2021.json";
 
 //Polyline offset circles issue doc: https://stackoverflow.com/questions/53708398/leaflet-polyline-precision-loss-on-zoom-out
 
@@ -47,43 +49,69 @@ const Map = ({ data, maybeSegments, showHighFrequency, showNewRoad }) => {
     };
   }
 
+  function styleCorridors(feature) {
+    return {
+      weight: 10,
+      color: "orange",
+      opacity: 0.4,
+    };
+  }
+
   return (
     <div className={classes.map}>
       <MapContainer center={mapCenter} zoom={13} minZoom={10} maxZoom={18}>
-        <Pane name="segment-tooltip" style={{ zIndex: 650 }}></Pane>
-        <Pane name="stops-overlay" style={{ zIndex: 499 }}>
-          {showStops && <StopsOverlay />}
-        </Pane>
-        <Pane name="included-segments" style={{ zIndex: 450 }}>
-          <SegmentsOverlay
-            data={includedLayerData}
-            color={mapColors}
-            showBothSides={showBothSides}
-            setZoomLevel={setZoomLevel}
-            showHighFrequency={showHighFrequency}
-          />
-        </Pane>
-        <Pane name="maybe-segments" style={{ zIndex: 430 }}>
-          <SegmentsOverlay
-            data={maybeLayerData}
-            color={[mapColors[3]]}
-            showBothSides={showBothSides}
-            setZoomLevel={setZoomLevel}
-            showHighFrequency={showHighFrequency}
-          />
-        </Pane>
-        <Pane name="subway-pane" style={{ zIndex: 420 }}>
-          {subway && (
-            <GeoJSON key={Math.random()} style={styleRail} data={subway} />
-          )}
-          {rail && (
-            <GeoJSON key={Math.random()} style={styleRail} data={rail} />
-          )}
-          {lightRail && (
-            <GeoJSON key={Math.random()} style={styleRail} data={lightRail} />
-          )}
-        </Pane>
         <LayersControl position="topleft">
+          <Pane name="segment-tooltip" style={{ zIndex: 650 }}></Pane>
+          <LayersControl.Overlay name="IBI-selected corridors" checked>
+            <Pane name="IBI-corridors" style={{ zIndex: 501 }}>
+              <GeoJSON data={IBIcorridors} style={styleCorridors} />
+            </Pane>
+          </LayersControl.Overlay>
+          <Pane name="stops-overlay" style={{ zIndex: 499 }}>
+            {showStops && <StopsOverlay />}
+          </Pane>
+          <Pane name="included-segments" style={{ zIndex: 450 }}>
+            <SegmentsOverlay
+              data={includedLayerData}
+              color={mapColors}
+              showBothSides={showBothSides}
+              setZoomLevel={setZoomLevel}
+              showHighFrequency={showHighFrequency}
+            />
+          </Pane>
+          <Pane name="maybe-segments" style={{ zIndex: 430 }}>
+            <SegmentsOverlay
+              data={maybeLayerData}
+              color={[mapColors[3]]}
+              showBothSides={showBothSides}
+              setZoomLevel={setZoomLevel}
+              showHighFrequency={showHighFrequency}
+            />
+          </Pane>
+
+          <LayersControl.Overlay checked name="Rail Lines">
+            <Pane name="subway-pane" style={{ zIndex: 420 }}>
+              <LayerGroup>
+                {subway && (
+                  <GeoJSON
+                    key={Math.random()}
+                    style={styleRail}
+                    data={subway}
+                  />
+                )}
+                {rail && (
+                  <GeoJSON key={Math.random()} style={styleRail} data={rail} />
+                )}
+                {lightRail && (
+                  <GeoJSON
+                    key={Math.random()}
+                    style={styleRail}
+                    data={lightRail}
+                  />
+                )}
+              </LayerGroup>
+            </Pane>
+          </LayersControl.Overlay>
           <LayersControl.BaseLayer name="Streets" checked>
             <Pane name="basemap" style={{ zIndex: 300 }}>
               <TileLayer
