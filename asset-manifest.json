@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/mbta-transit-priority-finder/static/css/main.0c17ebbf.css",
-    "main.js": "/mbta-transit-priority-finder/static/js/main.c4cb5225.js",
+    "main.js": "/mbta-transit-priority-finder/static/js/main.0109a2e5.js",
     "static/js/787.9336711c.chunk.js": "/mbta-transit-priority-finder/static/js/787.9336711c.chunk.js",
     "static/media/Frequency.md": "/mbta-transit-priority-finder/static/media/Frequency.a8a37d31937f6f0c1b68.md",
     "static/media/Variability.md": "/mbta-transit-priority-finder/static/media/Variability.aa137591c5e782fc42d9.md",
@@ -10,11 +10,11 @@
     "static/media/OM.md": "/mbta-transit-priority-finder/static/media/OM.25bb1567997c5cd8bcbe.md",
     "static/media/Xpt.md": "/mbta-transit-priority-finder/static/media/Xpt.c612805280e9ef1aa1af.md",
     "main.0c17ebbf.css.map": "/mbta-transit-priority-finder/static/css/main.0c17ebbf.css.map",
-    "main.c4cb5225.js.map": "/mbta-transit-priority-finder/static/js/main.c4cb5225.js.map",
+    "main.0109a2e5.js.map": "/mbta-transit-priority-finder/static/js/main.0109a2e5.js.map",
     "787.9336711c.chunk.js.map": "/mbta-transit-priority-finder/static/js/787.9336711c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.0c17ebbf.css",
-    "static/js/main.c4cb5225.js"
+    "static/js/main.0109a2e5.js"
   ]
 }
