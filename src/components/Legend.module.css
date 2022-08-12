@@ -9,9 +9,12 @@
 }
 
 .square {
-  width: 50px;
+  width: 60px;
   height: 20px;
   padding: 5px;
+  text-align: center;
+  color: #121212;
+  font-weight: bold;
 }
 
 .square-container {
@@ -19,6 +22,7 @@
   gap: 5px;
   font-size: 12px;
   align-items: center;
+  padding: 2px;
 }
 
 .label {

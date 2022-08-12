@@ -4,7 +4,7 @@ import { useState } from "react";
 const Legend = (props) => {
   const [collapsed, setCollapsed] = useState(true);
 
-  const descriptions = ["3 Criteria", "2 Criteria", "1 Criteria", "Possible"];
+  const descriptions = ["3 Criteria", "2 Criteria", "1 Criterion", "Possible"];
 
   return (
     <div className={classes.container}>
@@ -65,7 +65,7 @@ const Legend = (props) => {
                 key={1}
                 style={{ backgroundColor: props.colors[index] }}
               >
-                <p>{label}</p>
+                {label}
               </div>
               {!collapsed && <p>{label} Segments</p>}
             </div>
