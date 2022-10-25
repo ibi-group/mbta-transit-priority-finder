@@ -1,7 +1,7 @@
 import "./App.css";
 import Map from "./components/Map";
 import Sidebar from "./components/Sidebar";
-import segmentData from "./Data/mbta_BNR_segments_all_lines.json";
+import segmentData from "./Data/mbta_BNR_segments_2019_version.json";
 import { useState, useMemo, useCallback } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
 import { initialWeights, cols2021, cols2019, sharedCols } from "./globals";
