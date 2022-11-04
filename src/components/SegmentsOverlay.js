@@ -90,9 +90,13 @@ const SegmentsOverlay = ({
               <strong>Maximum 1-hour Bus Volume:</strong>{" "}
               {properties[sharedCols.max_freq]}
               <br />
+              <strong>Service Offering Score</strong>{" "}
+              {properties[sharedCols.freq_score]}
+              <br />
               <strong>Social Cost</strong> {properties[sharedCols.social_cost]}
               <br />
-              <strong>Travel Time</strong> {properties[sharedCols.travel_time]}
+              <strong>Social Cost Score</strong> {properties[sharedCols.social_cost_score]}
+              <strong>Passenger Experience Score</strong> {properties[sharedCols.travel_time]}
             </Popup>
           </Polyline>
         );
