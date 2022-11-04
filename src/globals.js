@@ -1,9 +1,9 @@
 import chroma from "chroma-js";
 
 export const initialWeights = {
-  freq: [2, 5],
-  sb: [2, 5],
-  travel: [2, 6],
+  freq: [0, 5],
+  sb: [0, 6],
+  travel: [0, 5],
 };
 
 export const mapColors = [
